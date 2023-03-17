@@ -1,6 +1,6 @@
 # PyTorch
 ![](https://img.shields.io/badge/pytorch-1.13.1-orange)
-![](https://img.shields.io/badge/lastest-2023--03--15-success)
+![](https://img.shields.io/badge/lastest-2023--03--16-success)
 ![](https://img.shields.io/badge/contact-dr.mokira%40gmail.com-blueviolet)
 
 ![](./images/Pytorch_logo.png)
@@ -15,6 +15,13 @@ Pytorch est aujourd’hui utilisé par *17%* des développeurs Python ([étude P
         <li><a href="#avant-propos">Avant propos</a> </li>
         <li><a href="#prérequis">Prérequis</a> </li>
         <li><a href="./intro/README.md">Introduction</a>
+            <ul>
+                <li><a href="./intro/README.md#pourquoi-pytorch">Pourquoi PyTorch ?</a></li>
+            </ul>
+        </li>
+        <li><a href="./tensor/README.md">Tenseur</a>
+            <ul>
+            </ul>
         </li>
     </ul>
 
