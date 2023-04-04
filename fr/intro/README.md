@@ -36,7 +36,7 @@ Biensûr que si. Les robots utilisés en agriculture de nos jour, utilisent PyTo
 <br/>
 <br/>
 
-- Je passe à la session **suivante**: [Tenseur](../tensor/README.md)
+- Je passe à la session **suivante**: [Introduction au Tenseur](../tensor/README.md)
 <!-- - [<--](../installation/README.md) Je reviens à la session **précédente**: [Installation et configuration](../installation/README.md) -->
 
 - [<--](../README.md) Je reviens à la session **précédente**: [PyTorch](../README.md)
