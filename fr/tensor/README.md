@@ -58,7 +58,7 @@ Les elements du scalaire : 10
 
 Donc, comme tu le vois, un scalaire n'a pas de dimension (`scalare.ndim = 0`) et n'a qu'un seul élément, c'est la valeur du nombre, ici le nombre `10`.
 
-#### Vecteur
+<!-- #### Vecteur -->
 <!-- 01:27:35 -->
 
 ### Opération sur les tenseur
@@ -91,7 +91,23 @@ print(torch.is_storage(y))  # False
 
 ```
 
-L'objet `y` est un tenseur, mais il n'est pas stocké. 
+L'objet `y` est un tenseur, mais il n'est pas stocké.
+
+#### La fonction from_numpy
+Comme son nom l'indique, cette fonction permet de convertir un tableau `numpy` en tenseur.
+
+```python
+import numpy as np
+import torch
+
+
+x = np.array([12, 13, 34, 9, 89])  # On crée un tableau numpy.
+t = torch.from_numpy(x)  # Ce tableau est ensuite passé à la fonction from_numpy()
+print(t)  # On affiche le tenseur obtenu.
+
+```
+
+![](./images/image_004.png)
 
 #### La fonction eye
 Comme les opérations NumPy, la fonction `eye()` permet de créer une matrice diagonale, dont les éléments diagonaux sont des uns (1), et les éléments qui ne sont pas dans la diagonale sont des zéros (0).
@@ -104,7 +120,7 @@ print(torch.eye(3, 4))
 ![](./images/image_002.png)
 
 
-#### La fonction linspace
+#### Les fonctions linspace et logspace
 La fonction `linspace()` permet de générer $n$ nombres dans un intervalle fermé $[x_1; x_2]$. Prenons l'exemple de la création de 25 points ($n = 25$) dans un espace linéaire en commençant par la valeur 2 et terminant par 10 ($[2; 10]$).
 
 ```python
@@ -113,6 +129,39 @@ print(torch.linspace(2, 10, steps=25))
 ```
 
 ![](./images/image_003.png)
+
+Il s'agit donc d'une **espace linéaire**. Tout comme les espace linéaires, les espaces logarithmiques peuvent être créés en utilisant la fonction `logspace()`.
+
+```python
+print(torch.logspace(start=10, end=15, steps=15))
+```
+
+![](./images/image_005.png)
+
+#### Les fonctions de générations aléatoires
+La génération de nombres aléatoires est très souvent utilisée en science des données. Les nombres aléatoires peuvent être générés à partir d'une distribution statistique, de deux valeurs quelconques ou d'une distribution prédéfinie. La distribution uniforme est définie comme une distribution où chaque résultat a la même probabilité de se produire. Tout comme les fonctions NumPy, les nombres aléatoires peuvent être générés à l'aide de l'exemple suivant.
+
+```python
+# On va générer 10 nombres aléatoires issus d'une distribution 
+# uniforme entre les valeurs 0 et 1.
+uniform_random_numbers = torch.rand(10)
+print(uniform_random_numbers)
+
+```
+
+![](./images/image_006.png)
+
+Les nombres aléatoires d'une distribution normale avec une moyenne arithmétique de 0 et un écart type de 1 peuvent également être créés comme suit.
+
+```python
+# On va générer 10 nombres aléatoires issus d'une distribution normale, 
+# avec une moyenne = 0 et un écart-type = 1
+normal_rand_numbers = torch.randn(10)
+print(normal_rand_numbers)
+
+```
+
+![](./images/image_007.png)
 
 <br/>
 <br/>
