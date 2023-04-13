@@ -75,19 +75,123 @@ phrase dans une langue et la cible est une phrase dans une autre langue.
 ![](./images/supervised_learning.png)
 
 - **Observations** : ce sont les éléments sur lesquels on veut prédire quelque
-chose. On désigne souvent les observations par `x` et parfois par `input`.
+chose. On désigne souvent les observations par $x$ et parfois par `input`.
 
 - **Targets** : ce sont des étiquettes correspondant à une observation.
 Il s'agit essentiellement des valeurs à prédire. Des valeurs considérées
-*vraies*. On utilise souvent `y` pour les désigner.
+*vraies*. On utilise souvent $y$ pour les désigner.
 
 - **Model** : c'est une expression mathématique ou une fonction qui prend
-une observation `x` en entré pour calculer et retourner la valeur de
-l'étiquette `y` associé à ce `x`.
+une observation $x$ en entré pour calculer et retourner la valeur de
+l'étiquette $y$ associé à ce $x$.
 
 - **Parameters** : Parfois appelés poids, ils représentent les paramètres ou
-coéfficients du modèle. Il sont souvent désigner par `w`.
+coéfficients du modèle. Il sont souvent désigner par $w$.
 
+- **Predictions** : Elle sont également appelées estimations, sont les 
+valeurs des étiquettes supposées par le modèle en fonction des observations
+(entrées).
+
+- **Loss function** : Une fonction de perte est une fonction qui calcule
+l'écart entre une prédiction et sa vraie valeur pour les entré dans les
+données d'apprentissage. Plus la valeur calculée par la fonction perte est
+faible, meilleur est la prédiction du modèle. On utilise souvent la lettre `L`
+pour désigner la fonction de perte.
+
+Étant donné l'ensemble de données suivant.
+
+$$
+D = \{X_i, y_i\}_{i = 1}^{n}
+$$
+
+avec $n$ le nombre total d'exemples. On souhaite entrainer une fonction
+(modèle) $f$ paramétrée par des poids $w$. Pour une entrée
+entrée $X$ donnée, le modèle prédit $ŷ$ comme target.
+
+$$
+ŷ = f(X, w)
+$$
+
+Dans l'apprentissage supervisée, pour les exemples d'apprentissage, nous
+connaissons la véritable cible $y$ pour une observation $X$. La fonction de
+calcul de perte pour ce modèle sera alors $L(y, ŷ)$.
+
+L'apprentissage supervisé devient alors un processus consistant à trouver les
+paramètres/poids optimaux $w$ qui minimiseront la perte (ou erreur) cumulée
+pour tous les $n$ exemples.
+
+
+### Observation et codage de la target
+On doit représenter les observations (texte) sous forme numérique afin de
+pouvoir les utiliser avec des algorithmes d'apprentissage automatique. Car ces
+derniers sont des fonctions mathématique; et qui dit fonction mathématique,
+ne peut que manipuler des nombres.
+
+![](./images/target_encoding.png)
+
+Une façon simple de représenter un texte est de le faire sous la forme
+d'un tableau numérique. Il existe d'innombrables façons d'effectuer cette
+mappage/représentation. En fait, une grande partie de ce cour est consacrée
+à la représentations des données pour une tâche spécifique. Cependant,
+on va commencer par quelques représentations simples basées sur du comptage.
+Bien que simples, elles sont incroyablement puissantes et peuvent servir de
+point de départ pour comprendre les représentations plus riches. Toutes ces
+types de représentations basées sur le comptage commencent par un vecteur de
+dimensions fixes.
+
+
+#### One-Hot Encoding
+La représentation **onehot**, comme son nom l'indique, commence par un vecteur
+nul et attribue la valeur `1` à l'entrée du vecteur correspondante la position
+du mot si il est présent dans la phrase ou le document. S'il n'est pas
+présent, alors le vecteur reste nul. On considère les phrases suivantes :
+
+```
+Time flies like an arrow.
+Fruit flies like a banana.
+```
+
+En tokenisant les phrases, en ignorant la ponctuation et en traitant tout
+en minuscules, on obtient un vocabulaire de taille 8 : `{time, fruit, flies,
+like, a, an, arrow, banana}`. Ainsi, on peut représenter chaque mot par un
+vecteur unidimensionnel de taille `8`.
+
+![](./images/onehot_encoding.png)
+
+Je vais maintenant te présenter *TermFrequency (TF)* et
+*TermFrequencyInverseDocumentFrequency (TFI)*.
+
+
+#### TF Encoding
+Elle fait aussi partie des techniques d'encodage les plus populaire dans le
+traitement de langue naturelle (NLP). La représentation TF d'une expression,
+d'une phrase ou d'un document est simplement la somme des représentations
+onehot de ses mots constitutifs. <!-- a reformuler -->
+Pour continuer avec nos exemples idiots,
+en utilisant l'encodage onehot mentionné ci-dessus, la phrase
+"Fruit flies like time flies a fruit" a la représentation TF suivante :
+`[1, 2, 2, 1, 1, 0, 0, 0]`. Note que chaque entrée correspond au nombre de
+fois où le mot correspondant apparaît dans la phrase (corpus).
+On désigne le $TF$ d'un mot $w$ par $TF(w)$.
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+import seaborn as sns
+
+
+corpus = ['Time flies flies like an arrow.',
+          'Fruit flies like a banana.']
+one_hot_vectorizer = CountVectorizer(binary=True)
+one_hot = one_hot_vectorizer.fit_transform(corpus).toarray()
+sns.heatmap(one_hot,
+            annot=True,
+            cbar=False,
+            xticklabels=vocab,
+            yticklabels=['Sentence 2'])
+
+```
+
+![](./images/tf_encoding.png)
 
 
 
