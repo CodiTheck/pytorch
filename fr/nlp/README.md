@@ -121,11 +121,11 @@ paramètres/poids optimaux $w$ qui minimiseront la perte (ou erreur) cumulée
 pour tous les $n$ exemples.
 
 
-### Observation et codage de la target
-On doit représenter les observations (texte) sous forme numérique afin de
-pouvoir les utiliser avec des algorithmes d'apprentissage automatique. Car ces
-derniers sont des fonctions mathématique; et qui dit fonction mathématique,
-ne peut que manipuler des nombres.
+### Codage des observations et des targets
+On doit représenter les observations ou entrées (texte) sous forme numérique
+afin de pouvoir les utiliser avec des algorithmes d'apprentissage automatique.
+Car ces derniers sont des fonctions mathématique; et qui dit fonction
+mathématique, ne peut que manipuler des nombres.
 
 ![](./images/target_encoding.png)
 
@@ -174,6 +174,7 @@ en utilisant l'encodage onehot mentionné ci-dessus, la phrase
 fois où le mot correspondant apparaît dans la phrase (corpus).
 On désigne le $TF$ d'un mot $w$ par $TF(w)$.
 
+<!-- A REVOIR -->
 ```python
 from sklearn.feature_extraction.text import CountVectorizer
 import seaborn as sns
@@ -181,8 +182,12 @@ import seaborn as sns
 
 corpus = ['Time flies flies like an arrow.',
           'Fruit flies like a banana.']
+
 one_hot_vectorizer = CountVectorizer(binary=True)
-one_hot = one_hot_vectorizer.fit_transform(corpus).toarray()
+X = one_hot_vectorizer.fit_transform(corpus)
+vocab = one_hot_vectorizer.get_feature_names_out()
+
+one_hot = X.toarray()
 sns.heatmap(one_hot,
             annot=True,
             cbar=False,
@@ -193,6 +198,100 @@ sns.heatmap(one_hot,
 
 ![](./images/tf_encoding.png)
 
+
+#### TF-IDF encoding
+Prenons l'exemple d'une collection de documents de brevets. On peut s'attendre
+à ce que la plupart d'entre eux contiennent des mots tels que revendication,
+système, méthode, procédure, etc., souvent répétés plusieurs fois.
+La représentation TF pondère les mots proportionnellement à leur fréquence.
+Toutefois, des mots courants tels que "revendication" n'ajoutent rien à notre
+compréhension d'un brevet spécifique. Inversement, si un mot rare (tel que
+"tétrafluoroéthylène") apparaît moins fréquemment mais est très probablement
+révélateur de la nature du document de brevet, alors on voudrait lui donner
+un poids plus important dans notre représentation. L'inverse DocumentFrequency
+(IDF) est une technique d'encodage qui permet d'atteindre cet objectif.
+La représentation IDF pénalise les mots communs et récompense les mots rares
+dans la représentation vectorielle.
+
+Le $IDF(w)$ d'un mot $w$ est défini par rapport à un corpus de texte
+comme suit :
+
+$$
+IDF(w) = log{\frac{N}{n_w}}
+$$
+
+Où :
+- $n_w$ est le nombre de documents qui contient le mot $w$.
+- $N$ est le nombre total de documents.
+
+Ainsi, le **TF-IDF** d'un $w$ est tout simplement le **produit du TF et du
+IDF** de ce mot.
+
+$$
+TFIDF(w) = TF(w) \times IDF(w)
+$$
+
+Donc, à noter que que s'il existe un mot qui apparaît dans tous les documents
+(c'est-à-dire $n_w = N$), alors le IDF de ce mot vaudra **0** et du coup la
+valeur du TF-IDF vaudra 0 aussi. Ce qui pénalise complètement ce mot.
+Si un mot apparaît très rarement, peut-être dans un seul document, alors son
+IDF aura une valeur très élevée, du coup son TF-IDF aura aussi une valeur
+très élevée. Voici un exemple :
+
+<!-- A REVOIR -->
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+import seaborn as sns
+
+# Au fait, ici une phrase est pris pour un document.
+corpus = ['Time flies flies like an arrow.',
+          'Fruit flies like a banana.']
+
+tfidf_vectorizer = TfidfVectorizer()
+X = tfidf_vectorizer.fit_transform(corpus)
+tfidf = X.toarray()
+sns.heatmap(
+    tfidf,
+    annot=True,
+    cbar=False,
+    xticklabels=vocab,
+    yticklabels=[
+        'Sentence 1',
+        'Sentence 2'
+    ]
+)
+
+```
+
+![](./images/tf_idf_encoding.png)
+
+En deep learning, il est rare de coder les variables d'entrées d'un réseau de
+neurones avec des représentations heuristiques comme TF-IDF, parce que le but
+est de trouver une représentation en apprenant les réseaus de neurones.
+Souvent, on commence par un encodage one-hot utilisant les indices entiers et
+une couche spéciale appelée *Embedding* pour construire les entrée du réseau
+neuronal. Dans ce long chapitre, je te présenterai plusieurs exemples de cette
+méthode.
+
+#### Codage des targets
+Comme décrite dans la section *Apprentissage supervisée*, la nature exacte
+de la variable de sortie peut dépendre de la tâche à effectuer.  Par exemple,
+dans le cas de la traduction automatique, du résumé, et la réponse aux
+questions, la sortie est également un texte et est encodée à l'aide d'approches
+telles que l'encodage onehot décrit précédemment.
+
+De nombreuses tâches de NLP utilisent en fait des étiquettes (sorties)
+catégorielles, le modèle doit prédire l'une d'entre elles parmi un ensemble
+fixe d'étiquettes. Une façon courante de coder cela est d'utiliser un entier
+comme index unique par étiquette, mais cette représentation simple peut
+devenir problématique lorsque le nombre de sortie devient trop important.
+Un exemple de ce type de problème est celui de la modélisation linguistique.
+La modélisation du langage est une tâche qui consiste à prédire le mot suivant,
+en fonction des mots précédents. L'ensemble de toutes les sorties possibles
+est l'ensemble du vocabulaire d'une langue. Or ce dernier peut facilement
+prendre atteindre plusieurs centaines de milliers de mots, y compris les
+caractères spéciaux, les noms, etc. On reviendra sur ce problème un peut plus
+loin dans ce chapitre, pour te montrer comment le résoudre.
 
 
 <br/>
