@@ -1,5 +1,5 @@
 ## Introduction au NLP
-![](https://img.shields.io/badge/lastest-2023--04--10-success)
+![](https://img.shields.io/badge/lastest-2023--04--20-success)
 ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
 
 Les noms courants comme Echo (Alexa), Siri et Google Translate ont au moins
@@ -72,7 +72,15 @@ donnée catégorielle et l'observation est un document (Text). Par exemple,
 dans un programme de traduction automatique de langue, l'observation est une
 phrase dans une langue et la cible est une phrase dans une autre langue.
 
+<p align="center">
+
 ![](./images/supervised_learning.png)
+
+</p>
+
+<p id="#figure01" align="center">
+<ins>Figure 01</ins> : Processus d'apprentissage supervisée
+</p>
 
 - **Observations** : ce sont les éléments sur lesquels on veut prédire quelque
 chose. On désigne souvent les observations par $x$ et parfois par `input`.
@@ -292,6 +300,62 @@ est l'ensemble du vocabulaire d'une langue. Or ce dernier peut facilement
 prendre atteindre plusieurs centaines de milliers de mots, y compris les
 caractères spéciaux, les noms, etc. On reviendra sur ce problème un peut plus
 loin dans ce chapitre, pour te montrer comment le résoudre.
+
+Certains problèmes de NLP consistent à prédire une valeur numérique à partir
+d'un texte donné. Par exemple, dans le cas d'un essai en anglais, nous
+pourrions avoir besoin d'attribuer une note numérique ou un score
+de lisibilité. Compte tenu d'un extrait d'avis sur un restaurant
+nous pourrions avoir besoin de prédire un nombre d'étoiles jusqu'à la première
+décimale. Compte tenu des tweets d'un utilisateur, nous pouvons être amenés à
+prédire sa tranche d'âge.  Il existe plusieurs approches pour coder les
+sorties numériques, mais le simple fait de placer les sorties dans des "bacs"
+catégoriels - par exemple, "018", "1925", "2530", etc, traiter le problème
+comme un problème de classification ordinale est une approche raisonnable.
+
+
+### Graphes de calcul
+En exploitant la [figure 01](#figure01), on résumé le paradigme de
+l'apprentissage supervisée (entrainement) comme une architecture de flux de
+calcul où les entrées sont transformées par le modèle (une expression
+mathématique) pour obtenir des prédictions (sortie $f(x)$), et la fonction
+de perte (une autre expression mathématique) pour fournir un signal de retour
+afin d'ajuster les paramètres (coéfficients ou poids) du modèle. Ce flux de
+calcul mis en œuvre à l'aide de la structure de données du graphe de calcul.
+
+Techniquement, un graphe calcul est une abstraction qui modélise les
+expressions mathématiques. Dans le contexte du *deep learning*,
+les implémentations du graphe de calcul (tels que Theano, TensorFlow et
+PyTorch) effectuent une opération additionnelle pour mettre en œuvre la
+différenciation automatique nécessaire pour obtenir les gradients des
+paramètres au cours de l'entrainement du modèle dans le processus de
+l'apprentissage supervisé. L'inférence (ou la prédiction) est simplement
+l'évaluation d'une expression (une propagation de calculs vers l'avant sur un
+graphe de calcul). Voyons comment les graphes de calcul modélisent
+les expressions :
+
+$$
+y = wx + b
+$$
+
+Cette expression mathématique peut être reécrite comme ceci $z = wx$ et
+$y = z + b$. Nous pouvons alors représenter l'expression originale à l'aide
+d'un graphe acyclique dirigé (DAG - *Directed Acyclic Graph*) dans lequel les
+nœuds sont les opérations mathématiques, comme la multiplication et l'addition.
+Les entrées des opérations sont les arêtes entrantes des nœuds et la sortie de
+opération est l'arête sortante. Donc pour l'expression mathématique
+$y = wx + b$, le graph de calcul resemblerait à la figure suivante :
+
+
+<p align="center">
+
+![](./images/computational_graph.png)
+
+</p>
+
+<p id="#figure01" align="center">
+<ins>Figure 06</ins> : représentation de $y = wx + b$ utilisant un graph de
+calcul.
+</p>
 
 
 <br/>
