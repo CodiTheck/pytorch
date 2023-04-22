@@ -215,7 +215,7 @@ sorties. ce qui nous donne une distribution de probabilité discrète sur k
 classes possibles. Voici son expression mathématique :
 
 $$
-softmax(x_i) = \frac{e^{x_i}}{\sum_{j = 1}^{k}{e^{x_j}}}
+softmax(x_i) = \frac{e^{x_i}}{\sum_{j = 1}^{k} e^{x_j}}
 $$
 
 La somme de toute les probabilité sont toutes égale à 1. Ceci est très utile
