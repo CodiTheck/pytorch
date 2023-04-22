@@ -314,10 +314,10 @@ comme un problème de classification ordinale est une approche raisonnable.
 
 
 ### Graphes de calcul
-En exploitant la [figure 01](#figure01), on résumé le paradigme de
+En exploitant la *figure 01*, on résumé le paradigme de
 l'apprentissage supervisée (entrainement) comme une architecture de flux de
 calcul où les entrées sont transformées par le modèle (une expression
-mathématique) pour obtenir des prédictions (sortie $f(x)$), et la fonction
+mathématique) pour obtenir des prédictions (sortie $f(x)$ ), et la fonction
 de perte (une autre expression mathématique) pour fournir un signal de retour
 afin d'ajuster les paramètres (coéfficients ou poids) du modèle. Ce flux de
 calcul mis en œuvre à l'aide de la structure de données du graphe de calcul.
@@ -337,7 +337,7 @@ $$
 y = wx + b
 $$
 
-Cette expression mathématique peut être reécrite comme ceci $z = wx$ et
+Cette expression mathématique peut être reécrite comme ceci : $z = wx$ et
 $y = z + b$. Nous pouvons alors représenter l'expression originale à l'aide
 d'un graphe acyclique dirigé (DAG - *Directed Acyclic Graph*) dans lequel les
 nœuds sont les opérations mathématiques, comme la multiplication et l'addition.

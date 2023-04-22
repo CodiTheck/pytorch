@@ -471,8 +471,8 @@ de tenseurs possibles. Donc, de façon générale, pour une valeur `n` passé
 <br/>
 <br/>
 
-- Je passe à la session **suivante** :
-[Distribution de probabilité](../proba/README.md)
-- [<--](../intro/README.md) Je reviens à la session **précédente** :
+- Je passe au chapitre **suivant** :
+[Réseaux de neuronnes](../nn/README.md)
+- [<--](../intro/README.md) Je reviens au chapitre **précédent** :
 [Introduction](../intro/README.md)
 
