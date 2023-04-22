@@ -26,11 +26,11 @@ sortie, et des "signaux" qui circulent des entrées vers les sorties, comme
 l'illustre la figure suivante :
 
 
-<p align="center">
+<div align="center">
 
 ![](./images/perceptron.png)
 
-</p>
+</div>
 <p align="center">
 <ins>Figure 01</ins> : Schema illustrant la structure de calcul
 d'un perceptron.
@@ -153,11 +153,11 @@ Comme tu peux le constater sur le graphique, la fonction sigmoïde sature
 et le fait pour la majorité des entrées. Cela peut très vite poser un problème
 dans le calcul des gradients.
 
-<p align="center">
+<div align="center">
 
 ![](./images/sigmoid.png)
 
-</p>
+</div>
 <p align="center">
 <ins>Figure 02</ins> : Représentation graphique de la fonction sigmoïde.
 </p>
@@ -192,11 +192,11 @@ plt.show()
 
 ```
 
-<p align="center">
+<div align="center">
 
 ![](./images/tanh.png)
 
-</p>
+</div>
 <p align="center">
 <ins>Figure 03</ins> : Représentation graphique
 de la fonction tangente hyperbolique.
