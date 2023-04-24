@@ -1,5 +1,5 @@
 ## Réseaux de neuronnes
-![](https://img.shields.io/badge/lastest-2023--04--22-success)
+![](https://img.shields.io/badge/lastest-2023--04--24-success)
 ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
 
 Ce chapitre prépare le terrain pour les chapitres suivants en présentant
@@ -311,7 +311,7 @@ telles que l'erreur absolue moyenne (MAE) et l'erreur quadratique moyenne
 (RMSE), mais elles impliquent toutes le calcul d'une distance à valeur réelle
 entre la valeur prédicte et la valeur vraie (cible).
 
-On va implémenter la fonction en python :
+On passe à l'implémentation de la fonction MSE en python :
 
 ```python
 def mse(preds, target):
@@ -346,7 +346,8 @@ print("LOSS:", loss)
 
 ![](./images/mse_code_1.png)
 
-Maintenant passons à l'implémentation utilisant Pytorch.
+Maintenant passons à l'implémentation de cette même fonction en utilisant
+Pytorch.
 
 ```python
 import torch
@@ -374,6 +375,57 @@ Je pense que tu as tout compris à présent.
 
 
 #### Categorical Cross-Entropy Loss
+La fonction de perte d'entropie croisée catégorielle est généralement utilisée
+dans des tâches de classification multiclasse dans lesquelles les résultats
+sont interprétés comme des prédictions de probabilités d'appartenance à une
+classe. La sortie $y$ du modèle est un vecteur à $n$ éléments qui représente
+une distribution multinomiale sur toutes les classes (catégories).
+
+> **Note** : Un vecteur de nombre peut être considéré comme une distribution
+> si la somme de tous ses éléments (nombres) est égale à **1**.
+
+Du coup, les sorties expérées, c'est à dire nos "target" seront aussi
+transformés en vecteur de taille $n$, dont chaque élément représente la
+probabilité d'appartenance à une catégorie de l'ensemble de données.
+Si une ligne $(X_i, y_i)$ de notre dataset porte une seule classe, alors on
+dira que la probabilité d'appartenance à cette classe est `1` (100%) et le
+vecteur de sortie représentant son $y_i$ sera un vecteur "one-hot"
+(`[0, 0, ..., 0, 1, 0, ..., 0, 0]`). L'index du `1` se trouvant dans ce dernier
+est l'entier qui représente cette catégorie ou classe. L'entropie croisée
+catégorielle va comparer ces deux vecteurs ($y$, $ŷ$) pour mesurer la perte.
+Voici son expression :
+
+$$
+L_{cross\_entropy(y, ŷ)} = - \sum_{i = 1}^{n} y_i \times log(ŷ_i)
+$$
+
+> L'entropie croisée et son expression trouvent leur origine dans la théorie
+> de l'information, mais pour les besoins de cette section, il est utile de la
+> considérer comme une méthode permettant de calculer la différence entre deux
+> distributions.
+
+Passons maintenant à l'implémentation de cette fonction en langage Python
+simple.
+
+```python
+import math
+
+
+def categorical_cross_entropy(preds, targets):
+    """Fonction de calcule de perte d'entropie croisée catégorielle.
+
+    :param preds: La distribution de probabilité prédite.
+    :type preds: list
+    :param targets: La distribution de probabilité attendue.
+    :type targets: list
+
+    :returns: La perte calculée.
+    :rtype: float
+    """
+    pass
+
+```
+
 
 <br/>
 <br/>
