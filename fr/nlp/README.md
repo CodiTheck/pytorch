@@ -72,11 +72,11 @@ donnée catégorielle et l'observation est un document (Text). Par exemple,
 dans un programme de traduction automatique de langue, l'observation est une
 phrase dans une langue et la cible est une phrase dans une autre langue.
 
-<p align="center">
+<div align="center">
 
 ![](./images/supervised_learning.png)
 
-</p>
+</div>
 
 <p id="#figure01" align="center">
 <ins>Figure 01</ins> : Processus d'apprentissage supervisée
@@ -346,11 +346,11 @@ opération est l'arête sortante. Donc pour l'expression mathématique
 $y = wx + b$, le graph de calcul resemblerait à la figure suivante :
 
 
-<p align="center">
+<div align="center">
 
 ![](./images/computational_graph.png)
 
-</p>
+</div>
 
 <p id="#figure01" align="center">
 <ins>Figure 06</ins> : représentation de $y = wx + b$ utilisant un graph de

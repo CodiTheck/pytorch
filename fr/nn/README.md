@@ -1,5 +1,5 @@
 ## Réseaux de neuronnes
-![](https://img.shields.io/badge/lastest-2023--04--24-success)
+![](https://img.shields.io/badge/lastest-2023--05--03-success)
 ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
 
 Ce chapitre prépare le terrain pour les chapitres suivants en présentant
@@ -69,6 +69,7 @@ qui prend un nombre arbitraire d'entrées, effectue une transformation affine,
 applique une fonction d'activation et produit une seule sortie.
 
 ```python
+# CODE 01
 # Importation des dépendances néccessaires :
 import torch
 import torch.nn as nn
@@ -132,6 +133,7 @@ fonction lisse et différentiable.-->
 La fonction `torch.sigmoid()` implémente la sigmoïde.
 
 ```python
+# CODE 02
 import torch
 import matplotlib.pyplot as plt
 
@@ -175,6 +177,7 @@ Au fait, la fonction tangent hyperbolique est simplement une transformation
 linéaire de la fonction sigmoïde. Ecrivons le code pour tracer sa courbe.
 
 ```python
+# CODE 03
 import torch
 import matplotlib.pyplot as plt
 
@@ -228,6 +231,7 @@ En attendant, voyons comment implémenter la fonction `softmax()` avec du code
 python basique.
 
 ```python
+# CODE 04
 import math
 
 
@@ -263,6 +267,7 @@ Et oui ! Pas de panique. Tout est logique. Maintenant, voyons ce calcul avec
 Pytorch.
 
 ```python
+# CDOE 05
 import torch
 import torch.nn as nn
 
@@ -314,6 +319,7 @@ entre la valeur prédicte et la valeur vraie (cible).
 On passe à l'implémentation de la fonction MSE en python :
 
 ```python
+# CODE 06
 def mse(preds, target):
     """Fonction de calcul de MSE.
 
@@ -350,6 +356,7 @@ Maintenant passons à l'implémentation de cette même fonction en utilisant
 Pytorch.
 
 ```python
+# CODE 07
 import torch
 import torch.nn as nn
 
@@ -403,7 +410,7 @@ $$
 > de l'information, mais pour les besoins de cette section, il est utile de la
 > considérer comme une méthode permettant de calculer la différence entre deux
 > distributions.
-
+<!--
 Passons maintenant à l'implémentation de cette fonction en langage Python
 simple.
 
@@ -422,9 +429,309 @@ def categorical_cross_entropy(preds, targets):
     :returns: La perte calculée.
     :rtype: float
     """
-    pass
+    epsilon = 1e-31
+    # epsilon sera utilisé pour éviter d'avoir un log(0) durant le calcul.
+    # Car le domaine de définition de la fonction logarithmique est ]0; +inf[.
+    # Et c'est pour qu'il n'y ait pas d'effets sur le calcul qu'il faut
+    # prendre une valeur très petite.
+
+    err_sum = 0.0
+    for y_i, yi in zip(preds, targets):
+        y_i = -1 * y_i if y_i < 0 else y_i
+        err_sum += yi * math.log(y_i + epsilon)
+
+    return err_sum
+
+
+# Soit y les sorties expérées:
+y = [[0, 1, 0, 0, 0],
+     [1, 0, 0, 0, 0],
+     [0, 0, 0, 1, 0]]
+
+# Soit yp les sorties prédictes:
+yp = [[-0.0922,  0.8214,  0.3349,  0.4971, -1.0460],
+      [ 2.8914, -0.0815,  0.6760,  0.5392, -0.8550],
+      [ 1.2244,  0.4889, -0.7127, -1.4901, -1.1385]]
+
+
+losses = 0.0  # L'erreur totale commise
+
+# Etant donné qu'on a plusieurs lignes, on va procéder
+# par itération et afficher la totale à la fin.
+for yp_row, y_row in zip(yp, y):
+    loss = categorical_cross_entropy(yp_row, y_row)
+    losses += loss
+    print(f"* loss: {loss:.5f}")
+
+print(f"TOTAL LOSS: {losses:.4f}")
 
 ```
+-->
+Maintenant, on passe à la programmation de la fonction de perte en utilisant
+Pytorch.
+
+```python
+# CODE 08
+import torch
+import torch.nn as nn
+
+
+ce_loss = nn.CrossEntropyLoss()
+outputs = torch.tensor(
+    [[-0.0922,  0.8214,  0.3349,  0.4971, -1.0460],
+     [ 2.8914, -0.0815,  0.6760,  0.5392, -0.8550],
+     [ 1.2244,  0.4889, -0.7127, -1.4901, -1.1385]]
+)
+
+# L'implémentation de CrossEntropyLoss() de PyTorch suppose
+# que chaque entrée a une classe particulière, et que chaque
+# classe a un index unique.
+targets = torch.tensor([1, 0, 3], dtype=torch.int64)
+loss = ce_loss(outputs, targets)
+print(loss)
+
+```
+
+![](./images/cross_entropy_loss.png)
+
+
+#### Binary Cross-Entropy Loss
+La fonction de perte d'entropie croisée catégorielle que nous avons vue dans
+la section précédente est très utile dans les problèmes de classification
+lorsque nous avons plusieurs classes. Mais, parfois, notre tâche consiste à
+discriminer entre deux classes (classification binaire). Dans ce cas, il est
+efficace d'utiliser la fonction de perte d'entropie croisée binaire (BCE).
+On utilisera cette fonction dans l'exemple de classification de l'ensemble
+des critiques de restaurants.
+
+```python
+# CODE 09
+import torch
+import torch.nn as nn
+
+
+bce_loss = nn.BCELoss()  # Instanciation de la fonctions d'erreur.
+sigmoid = nn.Sigmoid()  # Instanciation de la fonction sigmoid.
+
+# On definit un semblant de valeur représentant
+# les sorties successives d'un modèle.
+output = torch.tensor(
+    [[ 0.5777],
+     [ 1.1885],
+     [ 0.6515],
+     [-1.8122]]
+)  # shape: (4, 1)
+
+# On les convertie tous en distribution de probabilités
+probabilities = sigmoid(output)
+
+# Les sorties attendues.
+targets = torch.tensor([1, 0, 1, 0], dtype=torch.float32)  # shape: (1, 4)
+targets = targets.view(4, 1)  # shape: (4, 1)
+
+# Calcul de l'erreur.
+loss = bce_loss(probabilities, targets)
+
+print("probabilities: ", probabilities)
+print("loss: ", loss)
+
+```
+
+![](./images/binary_cross_entropy.png)
+
+
+### Apprentissage supervisée
+L'apprentissage supervisée nécessite les éléments suivants : un modèle,
+une fonction de perte, des données d'apprentissage et un algorithme
+d'optimisation. Les données d'apprentissage pour l'apprentissage supervisée
+sont des paires d'observations et d'étiquettes (cibles). le modèle calcule les
+prédictions à partir des observations, et la fonction de perte mesure l'erreur
+des prédictions par rapport aux valeurs attendues (ou cibles). L'objectif de
+l'apprentissage est d'utiliser l'algorithme d'optimisation basé sur le calcul
+de gradient pour ajuster les paramètres du modèle afin que les pertes
+deviennent aussi petites que possible.
+
+Dans cette section, on va résoudre un problème classique de classification
+qui consiste à classer des points bidimensionnels (2-dimensions) dans l'une
+des deux classes. Intuitivement, il s'agit d'apprendre une ligne (droite)
+unique, appelée *frontière de décision* ou *hyperplan*, pour distinguer les
+points d'une classe de l'autre. Je vais te décrire la construction des données,
+le choix du modèle, la sélection d'une fonction de perte, la mise en place de
+l'algorithme d'optimisation, et, enfin, l'exécution de l'ensemble.
+
+
+#### Construction des données
+Dans cette section, on va utiliser des données synthétiques pour la tâche de
+classification des points à deux dimensions dans l'une des deux classes.
+Pour construire ces données, on va échantillonner les points en deux parties
+différentes du plan $xy$, créant ainsi une situation facile à apprendre pour
+le modèle.
+
+<div align="center">
+
+![](./images/dataset_example.png)
+
+</div>
+<p align="center">
+<i>
+<ins>Figure 04</ins> : Construction d'un jeu de données linéairement séparable.
+</i>
+</p>
+
+> Les **données synthétiques** sont des données générées artificiellement
+> et non générées par des événements réels.
+
+
+Les deux classes dont les étoiles (⋆) et les les cercles (◯). Voici le code
+source pour générer de telles données :
+
+```python
+# CODE 10
+from sklearn.datasets import make_classification
+
+# On crée les observations (features) et les cibles (targets)
+features, targets = make_classification(
+    n_samples=100,  # On crée 100 échantions (100 lignes)
+    n_features=2,  # Chaque élément a deux caractéristiques (deux variables)
+    n_redundant=0, # 0 pour indiquer qu'il aura pas de répétition de données.
+    n_classes=2,  # Indique le nombre de classe, ici 2 classes.
+    random_state=45, # Juste une graine pour le générateur aléatoire.
+)
+
+n = 20
+print(f"Affichage des {n} premières echantillons :")
+for i, x, y in zip(range(n), features[:n], targets[:n]):
+    print(f"{i+1:4d} {x[0]:10.5f} {x[1]:10.5f} \t {y:1d}")
+
+```
+
+![](./images/toy_dataset.png)
+
+
+#### Choix du modèle
+Le modèle que nous allons utiliser ici est celui que t'es présenté au début du
+chapitre : le perceptron. Dans une situation de modélisation typique, la nombre
+d'entrées est déterminée par la tâche à accomplir et les données à traiter.
+Dans cet exemple, la nombre d'entrée est de 2 car on a explicitement construit
+les données dans un plan à deux dimensions. Pour ce problème à deux classes,
+on attribut un indice numérique aux classes : `0` et `1`.  La correspondance
+entre les étiquettes ⋆ et ◯ et les indices de classe `0` et `1`
+est arbitraire, c'est à dire que tu peux dire que pour toi l'étiquettes ⋆
+corresponds à l'indice `1` et étiquettes ◯ corresponds à l'indice `0`, ou 
+l'inverse. Cela ne change absolument rien concernant le bon déroulement de
+l'exécution de la tâche. Pourvue qu'il y ait une cohérance tout au long du
+prétraitement des données, de l'apprentissage, de l'évaluation et des tests.
+
+Une propriété supplémentaire importante de ce modèle est la nature
+de sa sortie. La fonction d'activation du perceptron étant une sigmoïde, alors
+la sortie du perceptron est sera interpreter comme une probabilité qu'un point
+de données (x) apartienne à l'une ou l'autre des deux classes. Cela se note
+$P(y = 1|x)$ pour la classe `1` et $P(y = 0|x)$ pour la classe `0`.
+
+Pour les problèmes de classification binaire, on peut convertir la
+probabilité obtenue en sortie en deux classes discrètes en se donnant une
+limite de décision $δ$. Si la probabilité prédicte est $P(y = 1|x) > δ$, alors
+la classe prédicte est `1`, dans la cas contraire ($P(y = 1|x) \leq δ$),
+la classe prédicte est `0`. La plus part du temps on fixe δ à `0.5`, mais
+dans la pratique, il peut arriver qu'on règle cet hyperparamètre en fonction
+des résultats d'évaluation du modèle afin d'obtenir la précision souhaitée
+dans une tâche de classification.
+
+
+#### Choix de la fonction perte
+Après avoir préparé les données et sélectionné une architecture de modèle,
+tu dois choisir deux autres composants qui sont essentiels dans le cadre de
+l'apprentissage supervisée : une fonction de perte et un optimiseur.
+Pour les situations dans lesquelles la sortie du modèle est une probabilité,
+la famille de fonctions de perte la plus appropriée est celle des pertes
+basées sur l'entropie croisée. Pour cet exemple de jeu de données, et étant
+donné que le modèle produit des résultats binaires, on va spécifiquement
+utiliser la fonction de perte *Binary cross entropy* (BCE).
+
+
+#### Choix de optimiseur
+Le dernier choix à faire dans cet exemple simplifié d'apprentissage supervisée
+est l'optimiseur. Pendant que le modèle effectue des prédictions et que la
+fonction de perte mesure l'erreur entre les prédictions et les cibles,
+l'optimiseur met à jour les paramètres (poids) du modèle de façon à minimiser
+les erreurs de prédiction. Ce optimiseur est paramétré par le *taux
+d'apprentissage*. Ce taux est un hyperparamètre qui a un effet sur la mise
+à jour des paramètres du modèle. Du coup, la variation de ce taux a
+une conséquence sur la précision du modèle après son apprentissage.
+
+Un taux d'apprentissage élevé entraine des modifications plus importantes
+des paramètres et peuvent affecter la convergence du modèle. Inversement,
+un taux d'apprentissage trop faible peut diminuer la vitesse d'apprentissage
+du modèle. Dans ce cas de figure, on dira que le modèle converge lantement.
+
+> On dit qu'un modèle converge, lorsque son erreur de prédiction diminue
+> considérablement. Ce qui est une bonne chose !
+
+La bibliothèque PyTorch propose plusieurs choix d'optimiseurs. Parmit eux,
+on a :
+- Stochastic gradient descent (SGD)
+- Optimiseur Adagrad;
+- Optimiseur Adam;
+- etc.
+
+La descente stochastique du gradient (SGD) est un algorithme classique, mais
+pour les problèmes d'optimisation difficiles, cet algorithme d'optimisation
+cause des problèmes de convergence au niveau du modèle. L'alternative
+actuellement préférée est celle des optimiseurs adaptatifs, tels que Adagrad
+ou Adam.Ils utilisent des informations sur les mises à jour dans le temps.
+Dans notre exemple de classification, on va utiliser l'optimiseur Adam, mais
+il est toujours utile d'essayer plusieurs optimiseurs. Avec Adam, le taux
+d'apprentissage par défaut est `0.001`. Avec des hyperparamètres comme le taux
+d'apprentissage, il est toujours recommandé d'utiliser d'abord les valeurs par
+défaut, à moins que tu dispose d'une recette tirée d'un article exigeant une
+valeur spécifique.
+
+```python
+# CODE 11
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+
+class Perceptron(nn.Module):
+    """Modèle d'un perceptron.
+
+    :param: input_dim: Le nombre d'entrée du perceptron.
+    :type: int
+    """
+
+    def __init__(self, input_dim):
+        """Constructeur d'un modèle de perceptron.
+        """
+        super(Perceptron, self).__init__()
+
+        # Un perceptron est constitué d'une couche
+        # linéaire à une unitée.
+        self.fc1 = nn.Linear(input_dim, 1)
+
+    def forward(self, x):
+        """Fonction de calcul de sortie d'un perceptron.
+
+        :param: x: La valeur de données.
+        :type: tensor.Tensor
+
+        :return: La sortie y
+        :rtype: torch.Tensor
+        """
+        z = self.fc1(x)  # Sortie linéaire.
+        y = torch.sigmoid(z).squeeze()  # Sortie non linéaire.
+        return y
+
+
+input_dim = 2  # Le nombre de variables d'entrées du modèle.
+lr = 0.001  # Le taux d'apprentissage
+
+model = Perceptron(input_dim=input_dim)  # Notre Modèle.
+bce_loss = nn.BCELoss()  # Notre fonction de perte.
+optimizer = optim.Adam(params=model.parameters(), lr=lr)  # Notre optimiseur.
+
+```
+
 
 
 <br/>
