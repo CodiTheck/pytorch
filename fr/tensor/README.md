@@ -1,5 +1,5 @@
 ## Introduction au Tenseur
-![](https://img.shields.io/badge/lastest-2023--04--10-success)
+![](https://img.shields.io/badge/lastest-2023--05--05-success)
 ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
 
 La structure de données utilisée dans PyTorch est basée sur les graphes
@@ -11,12 +11,14 @@ données multidimensionnelles, c'est-à-dire des données numériques.
 
 On va donc s'entraîner sur les tenseurs et leurs opérations.
 
+###### `PYTHON CODE #01`
 ```python
 import torch  # On importe pytorch.
 print(torch.__version__)  # On affiche sa version.
 
 ```
 
+<br/>
 <details id="table-content" open>
     <summary>Table des Contenus</summary>
     <ul>
@@ -54,7 +56,12 @@ print(torch.__version__)  # On affiche sa version.
     </ul>
 
 </details>
-<br/>
+
+<div align="center">
+
+[:house: **Retour à l'accueil**](../README.md)
+
+</div>
 
 ### Création de Tenseur
 Même si dans PyTorch, presque tout est appelé tenseur, il existe différents
@@ -67,6 +74,7 @@ Je sais que je vais te balancer un grand nombre de noms *étranges* de choses
 différentes, mais il est important que tu sois au courant de tous ces
 nomenclatures.
 
+###### `PYTHON CODE #02`
 ```python
 # on crée un scalaire
 scalar = torch.tensor(10)
@@ -96,6 +104,7 @@ et n'a qu'un seul élément, c'est la valeur du nombre, ici le nombre `10`.
 On peut créer un tenseur à une ligne (communement appelé *vecteur*) à partir
 d'un simple tableau python.
 
+###### `PYTHON CODE #03`
 ```python
 vector = torch.tensor([2, 3, 90, 19, -8], dtype=torch.float32)
 print(vector)
@@ -115,6 +124,7 @@ préalable dans le tableau python passé en argument à la fonction
 ##### Depuis un tableau numpy
 On peut créer un tenseur depuis un tableau `numpy`.
 
+###### `PYTHON CODE #04`
 ```python
 import numpy as np
 
@@ -132,6 +142,7 @@ print(torch.tensor(numpy_tab))
 Comme son nom l'indique, cette fonction permet de convertir un tableau `numpy`
 en tenseur.
 
+###### `PYTHON CODE #05`
 ```python
 import numpy as np
 import torch
@@ -152,6 +163,7 @@ print(t)  # On affiche le tenseur obtenu.
 Cette fonction permet de définir un tenseur nul, c'est à dire un tenseur dont
 tous les entrés sont à `0`.
 
+###### `PYTHON CODE #06`
 ```python
 vector_null = torch.zeros((10,))  # pour définir un vecteur nul.
 matrix_null = torch.zeros((2, 4))  # pour définir une matrice nulle.
@@ -169,6 +181,7 @@ print("tenseur nul :", tensor_null)
 #### La fonction ones
 Cette fonction permet de définir un tenseur dont tous les entrés sont à `1`.
 
+###### `PYTHON CODE #07`
 ```python
 vector_ones = torch.ones((10,))  # pour définir un vecteur rempli de 1.
 matrix_ones = torch.ones((2, 4))  # pour définir une matrice rempli de 1.
@@ -188,6 +201,7 @@ Comme les opérations NumPy, la fonction `eye()` permet de créer une matrice
 diagonale, dont les éléments diagonaux sont des uns (1), et les éléments qui
 ne sont pas dans la diagonale sont des zéros (0).
 
+###### `PYTHON CODE #08`
 ```python
 # on crée une matrice de 3 lignes et 4 colonnes.
 print(torch.eye(3, 4))
@@ -200,6 +214,7 @@ print(torch.eye(3, 4))
 Cette fonction permet de générer un tableau de valeurs discrettes comprises
 dans un intervalle donné. Ces valeurs sont équi-distantes d'un pas bien défini.
 
+###### `PYTHON CODE #09`
 ```python
 # On va générer un tableau de valeurs comprises
 # entre 10 et 40 avec un pas de 2
@@ -212,6 +227,7 @@ print(values_2)
 
 Par défaut, le pas vaut `1`, si tu ne le définis pas.
 
+###### `PYTHON CODE #10`
 ```python
 print(torch.arange(10, 40))
 ```
@@ -230,6 +246,7 @@ fermé $[x_1; x_2]$. Prenons l'exemple de la création de 25 points ($n = 25$)
 dans un espace linéaire en commençant par la valeur 2 et terminant par 10
 ($[2; 10]$).
 
+###### `PYTHON CODE #11`
 ```python
 print(torch.linspace(2, 10, steps=25))
 
@@ -241,6 +258,7 @@ Il s'agit donc d'une **espace linéaire**. Tout comme les espace linéaires,
 les espaces logarithmiques peuvent être créés en utilisant la fonction
 `logspace()`.
 
+###### `PYTHON CODE #12`
 ```python
 print(torch.logspace(start=10, end=15, steps=15))
 ```
@@ -258,6 +276,7 @@ On peut vérifier si un objet en Python est un objet tenseur en utilisant les
 fonctions `is_tensor()` et `is_storage()`. En générale, ces deux fonctions
 vérifient si l'objet est stocké en tant qu'objet tensoriel.
 
+###### `PYTHON CODE #13`
 ```python
 x = [12, 13, 34, 9, 89]  # juste une liste python
 print(torch.is_tensor(x))  # False
@@ -268,6 +287,7 @@ print(torch.is_storage(x))  # False
 Maintenant, créons un objet qui contient des nombres générés de façon
 aléatoire à partir de `torch`, similaire à la bibliothèque NumPy.
 
+###### `PYTHON CODE #14`
 ```python
 y = torch.randn(1, 2, 3, 4, 5)
 print(y)
@@ -278,6 +298,7 @@ print(y)
 
 Ensuite, on vérifie le type de `y`.
 
+###### `PYTHON CODE #15`
 ```python
 print(torch.is_tensor(y))  # True
 print(torch.is_storage(y))  # False
@@ -291,6 +312,7 @@ L'objet `y` est un tenseur, mais il n'est pas stocké.
 La fonction `numpy()` permet de récupérer un tenseur sous forme de tableau
 numpy.
 
+###### `PYTHON CODE #16`
 ```python
 # On crée un simple tenseur.
 t = torch.tensor([9., 4., 0.3, 9.])
@@ -308,6 +330,7 @@ print(type(numpy_tab))  # on affiche le type.
 
 #### Calcule de gradiant
 
+###### `PYTHON CODE #17`
 ```python
 import torch
 from torch.autograd import Variable
@@ -330,6 +353,7 @@ print("predict (before training): for x = {}, y = {:.2f}".format(x, y[0]))
 
 ```
 
+###### `PYTHON CODE #18`
 ```python
 x_data = [11.0, 22.0, 33.0]
 y_data = [21.0, 14.0, 64.0]
@@ -370,6 +394,7 @@ chaque résultat a la même probabilité de se produire. Tout comme les fonction
 NumPy, les nombres aléatoires peuvent être générés dans un tenseur à l'aide de
 la fonction `rand()`. 
 
+###### `PYTHON CODE #19`
 ```python
 # On va générer 10 nombres aléatoires issus d'une distribution 
 # uniforme entre les valeurs 0 et 1.
@@ -386,6 +411,7 @@ Les nombres aléatoires d'une distribution normale avec une moyenne
 arithmétique de 0 et un écart type de 1 peuvent également être générés dans
 un tenseur en utilisant la fonction `randn()`.
 
+###### `PYTHON CODE #20`
 ```python
 # On va générer 10 nombres aléatoires issus d'une distribution normale, 
 # avec une moyenne = 0 et un écart-type = 1
@@ -401,6 +427,7 @@ renseigne un seul paramètre comme dans l'exemple ci-dessus, alors tu auras
 un tableau à une dimension. Si tu renseigne deux paramètres alors tu auras un
 tableau à deux dimensions, et ainsi de suite...
 
+###### `PYTHON CODE #21`
 ```python
 # Exemple de génération d'un tableau à 3 dimensions
 tab_3d = torch.randn(2, 3, 5)
@@ -418,6 +445,7 @@ tu as compris.
 Cette fonction permet de sélectionner des valeurs de façon aléatoire
 dans une plage ou intervalle de valeurs comprises entre 0 et `n`.
 
+###### `PYTHON CODE #22`
 ```python
 # On va générer des valeurs de façon aléatoire comprises entre 0 et 10.
 random_values = torch.randperm(10)
@@ -431,6 +459,7 @@ Si tu recommence l'execution de `torch.randperm(10)`, tu auras un résultat
 différent du précédent. D'ailleur, je suis sûre que le résultat que tu as
 obtenu chez toi est différent de celui qui ce trouve sur la capture ci-dessus.
 
+###### `PYTHON CODE #23`
 ```python
 # Allez, exécutons 3 fois.
 print(torch.randperm(10))
@@ -447,11 +476,12 @@ déjà, son nom nous donne un indice : *rand perm*, *random permutation*.
 Du coup, le nombre de possibilités de tenseurs qu'on peut avoir avec
 `torch.randperm(10)` est égal à **3 628 800**.
 
-> Comment ça ?
+> Comment ça ? :thinking:
 
-C'est simple, j'ai juste calculer $10!$ et se lit : *factoriel 10*. Tu peux
+C'est simple, j'ai juste calculé $10!$ et se lit : *factoriel 10*. Tu peux
 le calculer avec python.
 
+###### `PYTHON CODE #24`
 ```python
 import math
 print(math.factorial(10))
@@ -459,7 +489,7 @@ print(math.factorial(10))
 ```
 
 Donc avec l'argument 10 passé à `torch.randperm()` tu peux avoir 3 628 800
-de tenseurs possibles. Donc, de façon générale, pour une valeur `n` passé
+de tenseurs possibles. Donc, de façon générale, pour une valeur `n` passée
 à `torch.randperm()`, tu peux obtenir $n!$ tenseurs possibles.
 
 
@@ -470,9 +500,9 @@ de tenseurs possibles. Donc, de façon générale, pour une valeur `n` passé
 
 <br/>
 <br/>
+<div align="center">
 
-- Je passe au chapitre **suivant** :
-[Réseaux de neuronnes](../nn/README.md)
-- [<--](../intro/README.md) Je reviens au chapitre **précédent** :
-[Introduction](../intro/README.md)
+<!-- [:arrow_backward: Installation et configuration](../installation/README.md) -->
+| [**Réseaux de neuronnes :arrow_forward:**](../nn/README.md)
 
+</div>
