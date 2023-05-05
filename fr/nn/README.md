@@ -1,5 +1,5 @@
 ## Réseaux de neuronnes
-![](https://img.shields.io/badge/lastest-2023--05--03-success)
+![](https://img.shields.io/badge/lastest-2023--05--05-success)
 ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
 
 Ce chapitre prépare le terrain pour les chapitres suivants en présentant
@@ -10,13 +10,42 @@ le perceptron qui représente un neurone, afin de relier les différents
 concepts. Il s'agit d'un modèle commun qui sera utilisé tout au long du cour.
 
 
+<br/>
 <details id="table-content" open>
     <summary>Table des Contenus</summary>
     <ul>
+        <li><a href="#le-perceptron">Le perceptron</a></li>
+        <li><a href="#fonction-dactivation">Fonction d'activation</a>
+            <ul>
+                <li><a href="#signoid">Signoid</a></li>
+                <li><a href="#tangent-hyperbolique">Tangent hyperbolique</a></li>
+                <li><a href="#softmax">Softmax</a></li>
+            </ul>
+        </li>
+        <li><a href="#fonction-de-perte">Fonction de perte</a>
+            <ul>
+                <li><a href="#mean-squared-error-loss">Mean Squared Error Loss</a></li>
+                <li><a href="#categorical-cross-entropy-loss">Categorical Cross-Entropy Loss</a></li>
+                <li><a href="#binary-cross-entropy-loss">Binary Cross-Entropy Loss</a></li>
+            </ul>
+        </li>
+        <li><a href="#apprentissage-supervis%C3%A9e">Apprentissage supervisée</a>
+            <ul>
+                <li><a href="#construction-des-données">Construction des données</a></li>
+                <li><a href="#choix-du-modèle">Choix du modèle</a></li>
+                <li><a href="#choix-de-la-fonction-perte">Choix de la fonction perte</a></li>
+                <li><a href="#choix-de-optimiseur">Choix de optimiseur</a></li>
+            </ul>
+        </li>
+        <!--<li><a href=""></a></li>-->
     </ul>
-
 </details>
-<br/>
+
+<div align="center">
+
+[:house: **Retour à l'accueil**](../README.md)
+
+</div>
 
 
 ### Le perceptron
@@ -27,6 +56,8 @@ l'illustre la figure suivante :
 
 
 <div align="center">
+
+###### Figure 01
 
 ![](./images/perceptron.png)
 
@@ -68,8 +99,8 @@ Le code source suivant présente une implémentation de perceptron dans PyTorch
 qui prend un nombre arbitraire d'entrées, effectue une transformation affine,
 applique une fonction d'activation et produit une seule sortie.
 
+###### `PYTHON CODE #01`
 ```python
-# CODE 01
 # Importation des dépendances néccessaires :
 import torch
 import torch.nn as nn
@@ -132,8 +163,8 @@ $$
 fonction lisse et différentiable.-->
 La fonction `torch.sigmoid()` implémente la sigmoïde.
 
+###### `PYTHON CODE #02`
 ```python
-# CODE 02
 import torch
 import matplotlib.pyplot as plt
 
@@ -157,6 +188,8 @@ dans le calcul des gradients.
 
 <div align="center">
 
+###### FIGURE 02
+
 ![](./images/sigmoid.png)
 
 </div>
@@ -176,8 +209,8 @@ $$
 Au fait, la fonction tangent hyperbolique est simplement une transformation
 linéaire de la fonction sigmoïde. Ecrivons le code pour tracer sa courbe.
 
+###### `PYTHON CODE #03`
 ```python
-# CODE 03
 import torch
 import matplotlib.pyplot as plt
 
@@ -196,6 +229,8 @@ plt.show()
 ```
 
 <div align="center">
+
+###### FIGURE 03
 
 ![](./images/tanh.png)
 
@@ -230,8 +265,8 @@ verra biensûre dans une prochaine section.
 En attendant, voyons comment implémenter la fonction `softmax()` avec du code
 python basique.
 
+###### `PYTHON CODE #04`
 ```python
-# CODE 04
 import math
 
 
@@ -266,8 +301,8 @@ print(y)
 Et oui ! Pas de panique. Tout est logique. Maintenant, voyons ce calcul avec
 Pytorch.
 
+###### `PYTHON CODE #05`
 ```python
-# CDOE 05
 import torch
 import torch.nn as nn
 
@@ -318,8 +353,8 @@ entre la valeur prédicte et la valeur vraie (cible).
 
 On passe à l'implémentation de la fonction MSE en python :
 
+###### `PYTHON CODE #06`
 ```python
-# CODE 06
 def mse(preds, target):
     """Fonction de calcul de MSE.
 
@@ -355,8 +390,8 @@ print("LOSS:", loss)
 Maintenant passons à l'implémentation de cette même fonction en utilisant
 Pytorch.
 
+###### `PYTHON CODE #07`
 ```python
-# CODE 07
 import torch
 import torch.nn as nn
 
@@ -470,8 +505,8 @@ print(f"TOTAL LOSS: {losses:.4f}")
 Maintenant, on passe à la programmation de la fonction de perte en utilisant
 Pytorch.
 
+###### `PYTHON CODE #08`
 ```python
-# CODE 08
 import torch
 import torch.nn as nn
 
@@ -504,8 +539,8 @@ efficace d'utiliser la fonction de perte d'entropie croisée binaire (BCE).
 On utilisera cette fonction dans l'exemple de classification de l'ensemble
 des critiques de restaurants.
 
+###### `PYTHON CODE #09`
 ```python
-# CODE 09
 import torch
 import torch.nn as nn
 
@@ -569,6 +604,8 @@ le modèle.
 
 <div align="center">
 
+###### FIGURE 04
+
 ![](./images/dataset_example.png)
 
 </div>
@@ -578,15 +615,15 @@ le modèle.
 </i>
 </p>
 
-> Les **données synthétiques** sont des données générées artificiellement
+> **Note** : les **données synthétiques** sont des données générées artificiellement
 > et non générées par des événements réels.
 
 
 Les deux classes dont les étoiles (⋆) et les les cercles (◯). Voici le code
 source pour générer de telles données :
 
+###### `PYTHON CODE #10`
 ```python
-# CODE 10
 from sklearn.datasets import make_classification
 
 # On crée les observations (features) et les cibles (targets)
@@ -664,7 +701,7 @@ des paramètres et peuvent affecter la convergence du modèle. Inversement,
 un taux d'apprentissage trop faible peut diminuer la vitesse d'apprentissage
 du modèle. Dans ce cas de figure, on dira que le modèle converge lantement.
 
-> On dit qu'un modèle converge, lorsque son erreur de prédiction diminue
+> **Note** : on dit qu'un modèle converge, lorsque son erreur de prédiction diminue
 > considérablement. Ce qui est une bonne chose !
 
 La bibliothèque PyTorch propose plusieurs choix d'optimiseurs. Parmit eux,
@@ -686,8 +723,8 @@ d'apprentissage, il est toujours recommandé d'utiliser d'abord les valeurs par
 défaut, à moins que tu dispose d'une recette tirée d'un article exigeant une
 valeur spécifique.
 
+###### `PYTHON CODE #11`
 ```python
-# CODE 11
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -736,8 +773,9 @@ optimizer = optim.Adam(params=model.parameters(), lr=lr)  # Notre optimiseur.
 
 <br/>
 <br/>
+<div align="center">
 
-<!-- - Je passe à la session **suivante** : -->
-<!-- [Distribution de probabilité](../proba/README.md) -->
-[<--](../tensor/README.md) Je reviens à la session **précédente** :
-[Introduction au Tenseur](../tensor/README.md)
+[:arrow_backward: Introduction au Tenseur](../tensor/README.md)
+<!-- | [**Distribution de probabilité :arrow_forward:**](./proba/README.md) -->
+
+</div>
