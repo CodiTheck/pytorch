@@ -99,7 +99,7 @@ Le code source suivant présente une implémentation de perceptron dans PyTorch
 qui prend un nombre arbitraire d'entrées, effectue une transformation affine,
 applique une fonction d'activation et produit une seule sortie.
 
-###### `PYTHON CODE #01`
+###### `PYTHON [01]`
 ```python
 # Importation des dépendances néccessaires :
 import torch
@@ -163,7 +163,7 @@ $$
 fonction lisse et différentiable.-->
 La fonction `torch.sigmoid()` implémente la sigmoïde.
 
-###### `PYTHON CODE #02`
+###### `PYTHON [02]`
 ```python
 import torch
 import matplotlib.pyplot as plt
@@ -209,7 +209,7 @@ $$
 Au fait, la fonction tangent hyperbolique est simplement une transformation
 linéaire de la fonction sigmoïde. Ecrivons le code pour tracer sa courbe.
 
-###### `PYTHON CODE #03`
+###### `PYTHON [03]`
 ```python
 import torch
 import matplotlib.pyplot as plt
@@ -265,7 +265,7 @@ verra biensûre dans une prochaine section.
 En attendant, voyons comment implémenter la fonction `softmax()` avec du code
 python basique.
 
-###### `PYTHON CODE #04`
+###### `PYTHON [04]`
 ```python
 import math
 
@@ -301,7 +301,7 @@ print(y)
 Et oui ! Pas de panique. Tout est logique. Maintenant, voyons ce calcul avec
 Pytorch.
 
-###### `PYTHON CODE #05`
+###### `PYTHON [05]`
 ```python
 import torch
 import torch.nn as nn
@@ -353,7 +353,7 @@ entre la valeur prédicte et la valeur vraie (cible).
 
 On passe à l'implémentation de la fonction MSE en python :
 
-###### `PYTHON CODE #06`
+###### `PYTHON [06]`
 ```python
 def mse(preds, target):
     """Fonction de calcul de MSE.
@@ -390,7 +390,7 @@ print("LOSS:", loss)
 Maintenant passons à l'implémentation de cette même fonction en utilisant
 Pytorch.
 
-###### `PYTHON CODE #07`
+###### `PYTHON [07]`
 ```python
 import torch
 import torch.nn as nn
@@ -505,7 +505,7 @@ print(f"TOTAL LOSS: {losses:.4f}")
 Maintenant, on passe à la programmation de la fonction de perte en utilisant
 Pytorch.
 
-###### `PYTHON CODE #08`
+###### `PYTHON [08]`
 ```python
 import torch
 import torch.nn as nn
@@ -539,7 +539,7 @@ efficace d'utiliser la fonction de perte d'entropie croisée binaire (BCE).
 On utilisera cette fonction dans l'exemple de classification de l'ensemble
 des critiques de restaurants.
 
-###### `PYTHON CODE #09`
+###### `PYTHON [09]`
 ```python
 import torch
 import torch.nn as nn
@@ -622,7 +622,7 @@ le modèle.
 Les deux classes dont les étoiles (⋆) et les les cercles (◯). Voici le code
 source pour générer de telles données :
 
-###### `PYTHON CODE #10`
+###### `PYTHON [10]`
 ```python
 from sklearn.datasets import make_classification
 
@@ -702,7 +702,7 @@ un taux d'apprentissage trop faible peut diminuer la vitesse d'apprentissage
 du modèle. Dans ce cas de figure, on dira que le modèle converge lantement.
 
 > **Note** : on dit qu'un modèle converge, lorsque son erreur de prédiction diminue
-> considérablement. Ce qui est une bonne chose !
+> considérablement. Ce qui est une bonne chose ! :blush:
 
 La bibliothèque PyTorch propose plusieurs choix d'optimiseurs. Parmit eux,
 on a :
@@ -715,7 +715,7 @@ La descente stochastique du gradient (SGD) est un algorithme classique, mais
 pour les problèmes d'optimisation difficiles, cet algorithme d'optimisation
 cause des problèmes de convergence au niveau du modèle. L'alternative
 actuellement préférée est celle des optimiseurs adaptatifs, tels que Adagrad
-ou Adam.Ils utilisent des informations sur les mises à jour dans le temps.
+ou Adam. Ils utilisent des informations sur les mises à jour dans le temps.
 Dans notre exemple de classification, on va utiliser l'optimiseur Adam, mais
 il est toujours utile d'essayer plusieurs optimiseurs. Avec Adam, le taux
 d'apprentissage par défaut est `0.001`. Avec des hyperparamètres comme le taux
@@ -723,7 +723,7 @@ d'apprentissage, il est toujours recommandé d'utiliser d'abord les valeurs par
 défaut, à moins que tu dispose d'une recette tirée d'un article exigeant une
 valeur spécifique.
 
-###### `PYTHON CODE #11`
+###### `PYTHON [11]`
 ```python
 import torch
 import torch.nn as nn
