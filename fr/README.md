@@ -1,20 +1,33 @@
 # PyTorch
 ![](https://img.shields.io/badge/pytorch-1.13.1-orange)
-![](https://img.shields.io/badge/lastest-2023--03--17-success)
+![](https://img.shields.io/badge/lastest-2023--05--05-success)
 ![](https://img.shields.io/badge/contact-dr.mokira%40gmail.com-blueviolet)
+
+<br/>
+
+<div align="center">
 
 ![](./images/Pytorch_logo.png)
 
-PyTorch est une bibliothèque logicielle Python open source d'apprentissage machine qui s'appuie sur *Torch* développée par Meta. Elle a été lancée officiellement en **2016** par une équipe du laboratoire de recherche de Facebook, et est depuis développé en open source. L’objectif de ce framework est de permettre l’implémentation et l’entraînement de modèles de **Deep Learning** de manière simple et efficace.
+</div>
 
-Pytorch est aujourd’hui utilisé par *17%* des développeurs Python ([étude Python Foundation 2020](https://www.jetbrains.com/lp/python-developers-survey-2020/)), et dans de nombreuses entreprises comme *Tesla*, *Uber* etc.
+PyTorch est une bibliothèque logicielle Python open source d'apprentissage
+machine qui s'appuie sur *Torch* développée par Meta. Elle a été lancée
+officiellement en **2016** par une équipe du laboratoire de recherche de
+Facebook, et est depuis développé en open source. L’objectif de ce framework
+est de permettre l’implémentation et l’entraînement de modèles de
+**Deep Learning** de manière simple et efficace.
+
+Pytorch est aujourd’hui utilisé par *17%* des développeurs Python
+([étude Python Foundation 2020](https://www.jetbrains.com/lp/python-developers-survey-2020/)),
+et dans de nombreuses entreprises comme *Tesla*, *Uber* etc.
 
 <details id="table-content" open>
     <summary>Table des Contenus</summary>
     <ul>
         <li><a href="#avant-propos">Avant propos</a> </li>
         <li><a href="#prérequis">Prérequis</a> </li>
-        <li><a href="./intro/README.md">Introduction</a>
+        <!--<li><a href="./intro/README.md">Introduction</a>
             <ul>
                 <li><a href="./intro/README.md#pourquoi-pytorch">Pourquoi PyTorch ?</a></li>
             </ul>
@@ -28,42 +41,75 @@ Pytorch est aujourd’hui utilisé par *17%* des développeurs Python ([étude P
                     </ul>
                 </li>
             </ul>
-        </li>
+        </li>-->
     </ul>
 
 </details>
 <br/>
 
 ## Avant propos
-D'autres framework ont été créés à quelques années d’intervalle avec sensiblement le même objectif mais avec des méthodes différentes. On va juste parler des plus populaires comme TensorFlow et Keras.
+D'autres framework ont été créés à quelques années d’intervalle avec
+sensiblement le même objectif mais avec des méthodes différentes.
+On va juste parler des plus populaires comme TensorFlow et Keras.
 
-*Keras* a été développé en mars 2015 par François Chollet, chercheur chez Google. Keras a vite gagné en popularité grâce à son API facile à utiliser, qui s’inspire grandement de *scikit-learn*, la librairie de Machine Learning standard de Python.
+*Keras* a été développé en mars 2015 par François Chollet, chercheur chez
+Google. Keras a vite gagné en popularité grâce à son API facile à utiliser,
+qui s’inspire grandement de *scikit-learn*, la librairie de Machine Learning
+standard de Python.
 
-Quelques mois plus tard, en novembre 2015, Google a publié une première version de TensorFlow qui est vite devenu le framework de référence en Deep Learning, car il permet d’utiliser Keras. Tensorflow a également mis au point un certain nombre de fonctionnalités en apprentissage profond dont les chercheurs avaient besoin pour créer facilement des réseaux de neurones complex.
+Quelques mois plus tard, en novembre 2015, Google a publié une première
+version de TensorFlow qui est vite devenu le framework de référence en
+Deep Learning, car il permet d’utiliser Keras. Tensorflow a également mis
+au point un certain nombre de fonctionnalités en apprentissage profond dont
+les chercheurs avaient besoin pour créer facilement des réseaux de neurones
+complex.
 
-Keras était donc très simple à utiliser, mais n’avait pas certaines fonctionnalités « bas niveau » ou certaines personnalisations nécessaires aux modèles de pointe. À l’inverse, Tensorflow donnait accès à ces fonctions, mais ne ressemblait pas au style habituel de Python et avait une documentation très compliquée pour les néophytes.
+Keras était donc très simple à utiliser, mais n’avait pas certaines
+fonctionnalités « bas niveau » ou certaines personnalisations nécessaires
+aux modèles de pointe. À l’inverse, Tensorflow donnait accès à ces fonctions,
+mais ne ressemblait pas au style habituel de Python et avait une documentation
+très compliquée pour les néophytes.
 
-**PyTorch a résolu ces problèmes** en créant une API à la fois accessible et facile à personnaliser, permettant de créer de nouveaux types de réseaux, des optimiseurs et des architectures inédites.
+**PyTorch a résolu ces problèmes** en créant une API à la fois accessible et
+facile à personnaliser, permettant de créer de nouveaux types de réseaux,
+des optimiseurs et des architectures inédites.
 
-Ceci-dit, les évolutions récentes de ces frameworks ont grandement rapproché leur mode de fonctionnement. Avant de rentrer dans les détails techniques de PyTorch, voici un tableau récapitulatif des différences entre ces outils. Keras et Tensorflow fonctionnant dorénavant de pair, il est plus pertinent de les présenter conjointement.
+Ceci-dit, les évolutions récentes de ces frameworks ont grandement rapproché
+leur mode de fonctionnement. Avant de rentrer dans les détails techniques de
+PyTorch, voici un tableau récapitulatif des différences entre ces outils.
+Keras et Tensorflow fonctionnant dorénavant de pair, il est plus pertinent de
+les présenter conjointement.
+
+<div align="center">
 
 ![](./images/img1.png)
+
+</div>
+<p align="center">
+<i>
+<ins>Figure 01</ins> : Tableau de comparaison des performances.
+</i>
+</p>
 
 
 ## Prérequis
 1. Avoir quelque notion de base en mathématique.
-2. Savoir écrire des algorithmes et programmer dans un langage de programmation.
+2. Savoir écrire des algorithmes et programmer dans un langage de
+programmation.
 3. Savoir programmer en langage **Python**.
 4. Maîtriser les bases de la programmation orientée objet (**POO**).
-5. Même si ce n'est pas obligatoire avant de commencer ce cour, il faut au moins avoir suivie un cour sur les bases du **deep learning** ailleurs qu'ici. Car je ne vais pas trop m'attarder sur ces notions de base.<br/>
-
-
+5. Même si ce n'est pas obligatoire avant de commencer ce cour,
+il faut au moins avoir suivie un cour sur les bases du **deep learning**
+ailleurs qu'ici. Car je ne vais pas trop m'attarder sur ces notions de base.
+<br/>
 
 <br/>
 <br/>
+<div align="center">
 
-- Je passe à la session **suivante**: [Introduction](./intro/README.md)
-- [<--](../README.md) Je reviens à la session **précédente**: [Accueil](../README.md)
+[:arrow_backward: Racine](../README.md)
+| [**Introduction :arrow_forward:**](./intro/README.md)
 
+</div>
 
 
