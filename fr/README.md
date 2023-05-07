@@ -27,6 +27,32 @@ et dans de nombreuses entreprises comme *Tesla*, *Uber* etc.
     <ul>
         <li><a href="#avant-propos">Avant propos</a> </li>
         <li><a href="#prérequis">Prérequis</a> </li>
+        <li><a href="./intro/README.md">Introduction</a>
+            <ul>
+                <li><a href="./intro/README.md#pourquoi-pytorch">Pourquoi PyTorch ?</a></li>
+            </ul>
+        </li>
+        <li><a href="./install/README.md">Installation et configuration</a></li>
+            <ul>
+                <li><a href="./install/README.md#sous-linux">Sous Linux</a></li>
+                <li><a href="./install/README.md#sous-windows-et-mac">Sous Windows et Mac</a></li>
+            </ul>
+        </li>
+        <li><a href="./tensor/README.md">Introduction au Tenseur</a>
+            <ul>
+                <li><a href="./tensor/README.md#création-de-tenseur">Création de Tenseur</a></li>
+                <li><a href="./tensor/README.md#opération-sur-les-tenseur">Opération sur les tenseur</a></li>
+                <li><a href="./tensor/README.md#g%C3%A9n%C3%A9rations-al%C3%A9atoires">Générations aléatoires</a></li>
+            </ul>
+        </li>
+        <li><a href="./nn/README.md">Réseaux de neuronnes</a>
+            <ul>
+                <li><a href="./nn/README.md#le-perceptron">Le perceptron</a></li>
+                <li><a href="./nn/README.md#fonction-dactivation">Fonction d'activation</a></li>
+                <li><a href="./nn/README.md#fonction-de-perte">Fonction de perte</a></li>
+                <li><a href="./nn/README.md#apprentissage-supervis%C3%A9e">Apprentissage supervisée</a></li>
+            </ul>
+        </li>
         <!--<li><a href="./intro/README.md">Introduction</a>
             <ul>
                 <li><a href="./intro/README.md#pourquoi-pytorch">Pourquoi PyTorch ?</a></li>
