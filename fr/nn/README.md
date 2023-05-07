@@ -63,8 +63,10 @@ l'illustre la figure suivante :
 
 </div>
 <p align="center">
+<i>
 <ins>Figure 01</ins> : Schema illustrant la structure de calcul
 d'un perceptron.
+</i>
 </p>
 
 Chaque unité de perceptron possède une entrée $x$, une sortie $y$ et trois (3)
@@ -194,7 +196,9 @@ dans le calcul des gradients.
 
 </div>
 <p align="center">
+<i>
 <ins>Figure 02</ins> : Représentation graphique de la fonction sigmoïde.
+</i>
 </p>
 
 
@@ -236,8 +240,10 @@ plt.show()
 
 </div>
 <p align="center">
+<i>
 <ins>Figure 03</ins> : Représentation graphique
 de la fonction tangente hyperbolique.
+</i>
 </p>
 
 Remarquez que tanh, comme la sigmoïde, est également une fonction

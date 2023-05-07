@@ -456,13 +456,6 @@ $n$ lignes, lorsque tu appliques la fonction `squeeze()` sur cette matrice,
 tu obtiens en sortie un vecteur, c'est à dire : un tenseur de dimension 1 à
 $n$ éléments.
 
-$$
-
-squeeze(\begin{bmatrix}2.4\cr0.9\cr8.8\cr1.03\end{bmatrix})
-= (2.4, 0.9, 8.8, 1.03)
-
-$$
-
 ###### `PYTHON [18]`
 ```python
 import torch
