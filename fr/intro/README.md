@@ -81,7 +81,7 @@ PyTorch pour leur modèle d'apprentissage machine. Si tu tape sur Google
 <div align="center">
 
 [:arrow_backward: Accueil](../README.md)
-<!-- | [**Installation et configuration :arrow_forward:**](./installation/README.md) -->
+| [**Installation et configuration :arrow_forward:**](../install/README.md)
 
 </div>
 

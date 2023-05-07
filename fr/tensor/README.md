@@ -687,7 +687,7 @@ de tenseurs possibles. Donc, de façon générale, pour une valeur `n` passée
 <br/>
 <div align="center">
 
-<!-- [:arrow_backward: Installation et configuration](../installation/README.md) -->
+[:arrow_backward: Installation et configuration](../install/README.md)
 | [**Réseaux de neuronnes :arrow_forward:**](../nn/README.md)
 
 </div>
