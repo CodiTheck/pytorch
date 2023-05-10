@@ -1,5 +1,5 @@
 ## Réseaux de neuronnes
-![](https://img.shields.io/badge/lastest-2023--05--05-success)
+![](https://img.shields.io/badge/lastest-2023--05--10-success)
 ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
 
 Ce chapitre prépare le terrain pour les chapitres suivants en présentant
@@ -35,6 +35,7 @@ concepts. Il s'agit d'un modèle commun qui sera utilisé tout au long du cour.
                 <li><a href="#choix-du-modèle">Choix du modèle</a></li>
                 <li><a href="#choix-de-la-fonction-perte">Choix de la fonction perte</a></li>
                 <li><a href="#choix-de-optimiseur">Choix de optimiseur</a></li>
+                <li><a href="#programme-dapprentissage">Programme d'apprentissage</a></li>
             </ul>
         </li>
         <!--<li><a href=""></a></li>-->
@@ -819,8 +820,8 @@ La mise à des paramètres du modèle se fait après chaque lot de données.
 Il appèle ça souvent *descente par batch*.
 
 Après avoir parcouru tous les lots de l'ensemble de données de taille finie,
-alors on dit que la boucle d'apprentissage a terminé une époque. Une époque est
-une itération d'apprentissage complète. Les modèles sont appris pendant un
+alors on dit que la boucle d'apprentissage a terminé une époque. Une époque
+est une itération d'apprentissage complète. Les modèles sont appris pendant un
 certain nombre d'époques (itérations). Le nombre d'époques d'apprentissage
 n'est pas facile à choisir, mais il existe des méthodes permettant de
 déterminer le moment où il faut s'arrêter. On les verra plus tard.
@@ -967,6 +968,57 @@ if __name__ == '__main__':
 ```
 
 ![](./images/training.png)
+
+Et voilà ! Tu remarques bien que l'erreur diminue au fur à mesure qu'il
+évolue dans les itérations, donc notre modèle apprend ou converge.
+
+
+### Concepts de l'apprentissage auxiliaire
+L'idée de base de l'apprentissage supervisé basé sur le gradient est simple :
+définir un modèle, calculer les sorties, utiliser une fonction de perte pour
+calculer les gradients et appliquer un algorithme d'optimisation pour mettre
+à jour les paramètres du modèle avec les gradients respectifs. Cependant,
+il existes plusieurs concepts auxiliaires pour le processus d'apprentissage.
+On va explorer quelques-uns dans cette section.
+
+
+#### Mesure des performances
+Le composant le plus important en dehors de la boucle principale
+d'apprentissage supervisée est une mesure objective de la performance
+en utilisant de données sur lesquelles le modèle n'a jamais été entrainé.
+Les modèles sont évalués à l'aide d'une ou plusieurs mesures de performance.
+Une des plus courante est la **précision**. La précision est simplement le
+rapport entre le nombre de prédictions correctes et le nombre total de données
+présentes dans l'ensemble de données qui n'a pas été utilisé pour
+l'entrainement.
+
+Il est important de toujours garder à l'esprit que l'objectif final est de
+bien généraliser la vraie valeur des données dans le modèle. C'est vrai que
+dans la vie réelle, il peut exister une infinité de données et si on veut
+vraiment généraliser le phénomène à l'origne de ces données, il va falloire
+avoir la total. Mais, au lieu de ça, on se content d'un échantillon que
+nous appelons "données d'apprentissage". On dit q'un modèle s'est mieux
+généralisé qu'un autre modèle s'il commet non seulement moins d'erreur sur
+les échantillons de données étudiées au cour de l'apprentissage, mais aussi sur
+les échantillons non étudiés. Cepandant, lorsque le modèle s'efforce
+de réduire ses erreurs sur les données d'apprentissage, il peut se "suradapter"
+et s'adapter à des particularités qui ne font pas réellement partie de la
+véritable distribution des données. On qualifie ce phénomène d'**Overfitting**.
+
+> Et Maintenant, c'est bon, ou ce n'est pas bon ? :thinking:
+
+Ce n'est pas bon, car même si c'est une bonne chose de constater que le
+modèle s'efforce à réduire ses erreurs de prédictions, cela devient très
+vite un gros problème.
+
+Pour éviter ce genre de problème et atteindre une bonne précision de
+prédiction, la bonne pratique courante consiste à diviser l'ensemble de
+données en trois partitions générées de manière aléatoire qui sont:
+- ensembles de données d'apprentissage,
+- ensembles de données de validation,
+- ensembles de données de test.
+
+Ou bien, procéder à une **validation croisée kfold**.
 
 
 <br/>
