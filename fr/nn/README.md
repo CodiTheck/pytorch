@@ -621,8 +621,8 @@ le modèle.
 </i>
 </p>
 
-> **Note** : les **données synthétiques** sont des données générées artificiellement
-> et non générées par des événements réels.
+> **Note** : les **données synthétiques** sont des données générées
+> artificiellement et non générées par des événements réels.
 
 
 Les deux classes dont les étoiles (⋆) et les les cercles (◯). Voici le code
@@ -729,7 +729,7 @@ d'apprentissage, il est toujours recommandé d'utiliser d'abord les valeurs par
 défaut, à moins que tu dispose d'une recette tirée d'un article exigeant une
 valeur spécifique.
 
-###### `PYTHON [11]`
+###### `</> PYTHON [11]`
 ```python
 import torch
 import torch.nn as nn
@@ -775,6 +775,198 @@ optimizer = optim.Adam(params=model.parameters(), lr=lr)  # Notre optimiseur.
 
 ```
 
+
+#### Programme d'apprentissage
+L'apprentissage commence par le calcul de l'erreur ou perte, c'est-à-dire :
+la mesure de l'écart entre les prédictions du modèle et la valeur vraie
+(cible). Le gradient de la fonction de perte, à son tour, représente une valeur
+indiquant de "combien" les paramètres doivent augmenter ou diminuer. Tout ce
+qui est impliqué dans l'apprentissage d'un modèle basé sur le calcul de
+gradient est la mise à jour itérative de chaque paramètre avec le gradient
+de la fonction de perte calculé par rapport à ce paramètre.
+
+$$
+w = w - \alpha \times \frac{\partial E}{\partial w}
+$$
+
+Voici la formule de mise à de paramètre avec le gradient. **$w$** représentant
+un paramètre; **$\alpha$** le taux d'apprentissage (`lr`); **$E$** la fonction
+de calcul d'erreur et **$\frac{\partial E}{\partial w}$** la dérivée partielle
+de la fonction $E$ par rapport à $w$. C'est cette dérivée qui représente un
+composant du gradient.
+
+Voyons un peu comment cela se présente avec Pytorch. Tout d'abord, toutes les
+données modifiables, telles que les paramètres du modèle, etc, sont
+initialisées. Les gradients aussi actuellement stockées dans l'objet du modèle
+(perceptron) sont initialisées à l'aide d'une fonction appelée `zero_grad()`.
+Au cour de l'apprentissage, le modèle calcule les sorties (`y_pred`) en
+fonction des données d'entrée (`x_data`). Ensuite, l'erreur est calculée en
+comparant les sorties du modèle (`y_pred`) aux cibles prévues (`y_target`). Il
+s'agit bien de la partie supervisée de l'apprentissage. L'objet de perte
+PyTorch (`criterion`) généré après calcul de l'erreur, possède une fonction
+appelée `backward()`. Cette fonction propage itérativement la perte vers
+l'arrière à travers le graphe de calcul en calculant les différentes dérivées
+partielles par rapport à chaque paramètre. Enfin, à l'aide de la fonction
+`step()`, l'optimiseur (`opt`) met à jour les paramètres en utilisant la valeur
+de leur dérivée respective, exactement comme dans la formule mathématique
+précédente.
+
+L'ensemble des données de d'apprentissage est divisé en plusieurs lots. Chaque
+lot de données a une taille définie par l'hyperparamètre d'apprentissage
+nommé `batch_size`. L'ensemble de données d'apprentissage étant fixe, alors
+l'augmentation de la taille des lots (`batch_size`) diminue le nombre de lots.
+La mise à des paramètres du modèle se fait après chaque lot de données.
+Il appèle ça souvent *descente par batch*.
+
+Après avoir parcouru tous les lots de l'ensemble de données de taille finie,
+alors on dit que la boucle d'apprentissage a terminé une époque. Une époque est
+une itération d'apprentissage complète. Les modèles sont appris pendant un
+certain nombre d'époques (itérations). Le nombre d'époques d'apprentissage
+n'est pas facile à choisir, mais il existe des méthodes permettant de
+déterminer le moment où il faut s'arrêter. On les verra plus tard.
+
+###### `</> PYTHON [12]`
+```python
+import numpy as np
+from sklearn.datasets import make_classification
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+
+INPUT_DIM = 2
+N_CLASSES = 2
+
+BATCH_SIZE = 50
+EPOCHS = 20
+LEARNING_RATE = 0.001
+
+
+class Perceptron(nn.Module):
+    """Modèle d'un perceptron.
+
+    :param: input_dim: Le nombre d'entrée du perceptron.
+    :type: int
+    """
+
+    def __init__(self, input_dim):
+        """Constructeur d'un modèle de perceptron.
+        """
+        super(Perceptron, self).__init__()
+
+        # Un perceptron est constitué d'une couche
+        # linéaire à une unitée.
+        self.fc1 = nn.Linear(input_dim, 1)
+
+    def forward(self, x):
+        """Fonction de calcul de sortie d'un perceptron.
+
+        :param: x: La valeur de données.
+        :type: tensor.Tensor
+
+        :return: La sortie y
+        :rtype: torch.Tensor
+        """
+        z = self.fc1(x)  # Sortie linéaire.
+        y = torch.sigmoid(z).squeeze()  # Sortie non linéaire.
+        return y
+
+
+def load_dataset(n_samples, input_dim, n_classes): 
+    # On crée les observations (features) et les cibles (targets)
+    features, targets = make_classification(
+        n_samples=n_samples,
+        n_features=input_dim,
+        n_redundant=0,
+        n_classes=n_classes,
+        random_state=45,
+    )
+    return features, targets
+
+
+def print_n_first(features, targets, n = 10):
+    print(f"Affichage des {n} premières echantillons :")
+    for i, x, y in zip(range(n), features[:n], targets[:n]):
+        print(f"{i+1:4d} {x[0]:10.5f} {x[1]:10.5f} \t {y:1d}")
+
+
+def batch2tensor(x_arr, y_arr, dtype=torch.float):
+    # On converti les tableau en tableau numpy pour éviter
+    # d'avoir l'avertissement suivant:
+    #
+    # `UserWarning: Creating a tensor from a list of numpy.ndarrays
+    # is extremely slow. Please consider converting the list to a
+    # single numpy.ndarray with numpy.array() before converting to a
+    # tensor...``
+    x_arr = np.array(x_arr)
+    y_arr = np.array(y_arr)
+    return (
+        torch.tensor(x_arr, dtype=dtype),
+        torch.tensor(y_arr, dtype=dtype),
+    )
+
+
+def get_batch_generator(features, targets):
+    n_samples = len(features)
+    x_batch = []
+    y_batch = []
+    for i in range(n_samples):
+        x_batch.append(features[i])
+        y_batch.append(targets[i])
+
+        if len(x_batch) >= BATCH_SIZE:
+            yield batch2tensor(x_batch, y_batch)
+            x_batch.clear()
+            y_batch.clear()
+
+    if x_batch:
+        # Si ça reste encore, alors on balance le reste
+        # dans un dernier lot.
+        yield batch2tensor(x_batch, y_batch)
+
+
+def main():
+    """Fonction principale"""
+    # On charge la dataset:
+    X, y = load_dataset(10000, INPUT_DIM, N_CLASSES)
+    print_n_first(X, y, n=10)
+
+    # Onn initialise le modèle et ses composants:
+    perceptron = Perceptron(input_dim=INPUT_DIM)  # Notre Modèle.
+    bce_loss = nn.BCELoss()
+    optimizer = optim.Adam(params=perceptron.parameters(), lr=LEARNING_RATE)
+
+    print("\nProcessus d'apprentissage...")
+    for epoch in range(EPOCHS):
+        batchs = get_batch_generator(X, y)
+        losses = 0
+        for x_data, y_target in batchs:
+            # On efface les gradients:
+            perceptron.zero_grad()
+            # On calcule une novelle prédiction:
+            y_pred = perceptron(x_data)
+            # Calcul de l'erreur:
+            loss = bce_loss(y_pred, y_target)
+            losses += loss.item()
+            # Propagation vers l'arrière: Calcule des gradients
+            loss.backward()
+            # Mise à jour des paramètres du modèle:
+            optimizer.step()
+
+        print(
+            f"Epoch {(epoch + 1):3d} est terminé"
+            f" avec une erreur de: {losses:9.4f}."
+        )
+
+
+if __name__ == '__main__':
+    # Exécution principale:
+    main()
+
+```
+
+![](./images/training.png)
 
 
 <br/>
