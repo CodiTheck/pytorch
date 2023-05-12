@@ -255,19 +255,19 @@ des valeurs réelles prises par cette fonction est $[-1; 1]$.
 #### Softmax
 Comme la fonction sigmoïde, la fonction softmax écrase la sortie de chaque
 unité (neurone) pour qu'elle soit comprise entre 0 et 1, Cependant, l'opération
-softmax divisant chaque sortie par la somme totale de toutes les
-sorties. ce qui nous donne une distribution de probabilité discrète sur k
+softmax divisent chaque sortie par la somme totale de toutes les
+sorties. Ce qui nous donne une distribution de probabilité discrète sur k
 classes possibles. Voici son expression mathématique :
 
 $$
 softmax(x_i) = \frac{e^{x_i}}{\sum_{j = 1}^{k} e^{x_j}}
 $$
 
-La somme de toute les probabilité sont toutes égale à 1. Ceci est très utile
+La somme de toute les probabilité est égale à 1. Ceci est très utile
 pour l'interprétation des résultats des tâches de classification. Cette
 transformation est donc généralement associée à un objectif
 d'apprentissage probabiliste, tel que l'*entropie croisée catégorielle*, qu'on
-verra biensûre dans une prochaine section.
+verra bien sûre dans une prochaine section.
 
 En attendant, voyons comment implémenter la fonction `softmax()` avec du code
 python basique.
@@ -713,7 +713,7 @@ du modèle. Dans ce cas de figure, on dira que le modèle converge lantement.
 
 La bibliothèque PyTorch propose plusieurs choix d'optimiseurs. Parmit eux,
 on a :
-- Stochastic gradient descent (SGD)
+- Stochastic gradient descent (SGD);
 - Optimiseur Adagrad;
 - Optimiseur Adam;
 - etc.
@@ -1013,7 +1013,7 @@ vite un gros problème.
 
 Pour éviter ce genre de problème et atteindre une bonne précision de
 prédiction, la bonne pratique courante consiste à diviser l'ensemble de
-données en trois partitions générées de manière aléatoire qui sont:
+données en trois partitions générées de manière aléatoire qui sont :
 - ensembles de données d'apprentissage,
 - ensembles de données de validation,
 - ensembles de données de test.
