@@ -1,5 +1,5 @@
 ## Introduction au Tenseur
-![](https://img.shields.io/badge/lastest-2023--05--06-success)
+![](https://img.shields.io/badge/lastest-2023--05--13-success)
 ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
 
 La structure de données utilisée dans PyTorch est basée sur les graphes
@@ -51,7 +51,7 @@ print(torch.__version__)  # On affiche sa version.
             </li>
             <li><a href="#op%C3%A9ration-de-redimensionnement">Opération de redimensionnement</a>
                 <ul>
-                    <li><a href="#la-fonction-squeeze">La fonction squeeze</a></li>
+                    <li><a href="#la-fonction-squeeze-et-unsqueeze">La fonction squeeze et unsqueeze</a></li>
                 </ul>
             </li>
             <li><a href="#calcule-de-gradiant">Calcule de gradiant</a></li>
@@ -426,7 +426,7 @@ print("argmin(T, dim=1) =", col_indices)
 
 
 #### Opération de redimensionnement
-##### La fonction squeeze
+##### La fonction squeeze et unsqueeze
 La fonction `Tensor.squeeze()` est utilisée pour redimensionner un tenseur en
 supprimant toutes ses dimensions de taille **1**.
 
@@ -504,6 +504,56 @@ for i in range(9):
 
 ![](./images/squeeze_f3.png)
 
+Concernant la fonction `torch.unsqueeze()`, on dira tout simplement le
+contraire de la fonction `squeeze()`.
+
+`torch.unsqueeze()` renvoie un nouveau tenseur avec la dimension 1 insérée à la
+position spécifiée en second argument.
+
+
+###### `</> PYTHON [20]`
+```python
+import torch
+
+# Prenons un exemple simple:
+x = torch.tensor([1, 2, 3, 4])
+print("x =", x)
+print("x.shape =", x.shape)
+
+# on cible les lignes:
+y0 = torch.unsqueeze(x, 0)
+print("\ny0 =", y0)
+print("y0.shape =", y0.shape)
+
+# on cible les colonnes:
+y1 = torch.unsqueeze(x, 1)
+print("\ny1 =", y1)
+print("y1.shape =", y1.shape)
+
+```
+
+![](./images/unsqueeze.png)
+
+Donc, si la dimension du tenseur t est (3, 4, 5) alors son unsqueeze(t, 0)
+donnera un tenseur de dimension (1, 3, 4, 5) et son unsqueeze(t, 1)
+donnera un tenseur de dimension (3, 4, 1, 5).
+
+###### `</> PYTHON [21]`
+```python
+import torch
+
+t = torch.randn(3, 4, 5)
+print("t.shape =", t.shape)
+
+t0 = torch.unsqueeze(t, 0)
+print("t0.shape =", t0.shape)
+
+t2 = torch.unsqueeze(t, 2)
+print("t2.shape =", t2.shape)
+
+```
+
+![](./images/unsqueeze2.png)
 
 
 #### Calcule de gradiant
