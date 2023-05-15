@@ -2,7 +2,7 @@
 
 # PyTorch
 ![](https://img.shields.io/badge/pytorch-1.13.1-orange)
-![](https://img.shields.io/badge/lastest-2023--05--07-success)
+![](https://img.shields.io/badge/lastest-2023--05--15-success)
 ![](https://img.shields.io/badge/contact-dr.mokira%40gmail.com-blueviolet)
 
 <br/>
