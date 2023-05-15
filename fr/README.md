@@ -1,15 +1,12 @@
+<p align="center"><img width="40%" src="./images/Pytorch_logo.png" /></p>
+
+-------------------------------------------------------------------------------
+
 <div align="center">
 
-# PyTorch
 ![](https://img.shields.io/badge/pytorch-1.13.1-orange)
 ![](https://img.shields.io/badge/lastest-2023--05--15-success)
 ![](https://img.shields.io/badge/contact-dr.mokira%40gmail.com-blueviolet)
-
-<br/>
-
-
-
-![](./images/Pytorch_logo.png)
 
 </div>
 
@@ -32,7 +29,8 @@ et dans de nombreuses entreprises comme *Tesla*, *Uber* etc.
         <li><a href="#prérequis">Prérequis</a> </li>
         <li><a href="./intro/README.md">Introduction</a>
             <ul>
-                <li><a href="./intro/README.md#pourquoi-pytorch">Pourquoi PyTorch ?</a></li>
+                <li><a href="./intro/README.md#pourquoi-pytorch-">Pourquoi PyTorch ?</a></li>
+                <li><a href="./intro/README.md#utilisation-de-pytorch">Utilisation de PyTorch</a></li>
             </ul>
         </li>
         <li><a href="./install/README.md">Installation et configuration</a></li>

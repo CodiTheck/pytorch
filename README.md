@@ -1,12 +1,11 @@
+<p align="center"><img width="40%" src="./images/Pytorch_logo.png" /></p>
+
+-------------------------------------------------------------------------------
+
 <div align="center">
 
-# PyTorch
 ![](https://img.shields.io/badge/lastest-2023--05--15-success)
 ![](https://img.shields.io/badge/contact-dr.mokira%40gmail.com-blueviolet)
-
-<br/>
-
-![](./images/Pytorch_logo.png)
 
 </div>
 
