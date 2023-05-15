@@ -1,10 +1,10 @@
+<div align="center">
+
 # PyTorch
 ![](https://img.shields.io/badge/lastest-2023--05--05-success)
 ![](https://img.shields.io/badge/contact-dr.mokira%40gmail.com-blueviolet)
 
 <br/>
-
-<div align="center">
 
 ![](./images/Pytorch_logo.png)
 
