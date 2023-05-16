@@ -31,6 +31,7 @@ et dans de nombreuses entreprises comme *Tesla*, *Uber* etc.
             <ul>
                 <li><a href="./intro/README.md#pourquoi-pytorch-">Pourquoi PyTorch ?</a></li>
                 <li><a href="./intro/README.md#utilisation-de-pytorch">Utilisation de PyTorch</a></li>
+                <li><a href="./intro/README.md#avantages-de-pytorch">Avantages de PyTorch</a></li>
             </ul>
         </li>
         <li><a href="./install/README.md">Installation et configuration</a></li>

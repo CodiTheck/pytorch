@@ -1,6 +1,6 @@
 ## Introduction
-![](https://img.shields.io/badge/lastest-2023--05--15-success)
-![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
+![](https://img.shields.io/badge/lastest-2023--05--16-success)
+<!-- ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow) -->
 
 Ce cours ne remplace pas tout ce qui se trouve sur cette
 [page d'accueil](https://pytorch.org/docs/stable/index.html).
@@ -46,6 +46,7 @@ Là, je sent que tu es motivé ! :blush:
     <ul>
         <li><a href="#pourquoi-pytorch-">Pourquoi PyTorch ?</a></li>
         <li><a href="#utilisation-de-pytorch">Utilisation de PyTorch</a></li>
+        <li><a href="#avantages-de-pytorch">Avantages de PyTorch</a></li>
     </ul>
 
 </details>
@@ -70,6 +71,7 @@ par ordinateur des voitures autonomes de Tesla.
 
 <div align="center">
 
+###### FIGURE 02
 ![](./images/image_01.jpeg)
 
 </div>
@@ -98,6 +100,23 @@ Biensûr que si. Les robots utilisés en agriculture de nos jour, utilisent
 PyTorch pour leur modèle d'apprentissage machine. Si tu tape sur Google
 "**AI for AG**", parmit les résultats, tu trouveras ce
 [lien](https://medium.com/pytorch/ai-for-ag-production-machine-learning-for-agriculture-e8cfdb9849a1).
+
+PyTorch est une bibliothèque d’apprentissage automatique assez récente, mais
+elle dispose d’un grand nombre de manuels et de tutoriels où il est possible
+de trouver des exemples. Elle dispose également d’une communauté qui se
+développe à pas de géant.
+
+Contrairement à d’autres outils d’apprentissage automatique tels que
+Tensorflow, PyTorch fonctionne avec des graphes dynamiques plutôt que
+statiques. Cela signifie qu’au moment de l’exécution, les fonctions peuvent
+être modifiées. Alors que, dans Tensorflow, il faut tout d’abord définir le
+graphe de calcul, puis utiliser la session pour calculer les résultats des
+tenseurs, ce qui rend le débogage du code plus difficile et la mise en œuvre
+plus fastidieuse.
+
+PyTorch est compatible avec les cartes graphiques (GPU). Il utilise
+**CUDA** en interne, une API qui relie le CPU au GPU et qui a été développée
+par *NVIDIA*.
 
 
 ### Utilisation de PyTorch
@@ -139,6 +158,27 @@ Pour plus d'informations sur Kubernetes, suis cette
 [🎞 vidéo](https://youtu.be/NChhdOZV4sY).
 
 
+### Avantages de PyTorch
+Bien que PyTorch présente de nombreux avantages, on va juste se concentrerons
+ici sur les quelques-uns.
+
+- **PyTorch est coder en python** : La plupart des travaux liés à
+l’apprentissage automatique et à l’Intelligence Artificielle sont effectués
+en utilisant le langage Python. Et étant donné que Pytorch a été codé en
+Python, alors les développeurs Python devraient se sentir plus à l’aise.
+
+- **Facile à apprendre** : Comme le langage Python, PyTorch est considéré
+comme relativement plus facile à apprendre par rapport à d’autres frameworks.
+La raison principale est due à sa syntaxe simple et intuitive.
+
+- **Communauté forte** : Bien que PyTorch soit un framework relativement
+récent, il a développé très rapidement une communauté dédiée de développeurs.
+De plus, la documentation de PyTorch est très organisée et permet aux
+débutants de mieux se retrouver.
+
+- **Débogage facile** : PyTorch est profondément intégré à Python, du coup,
+plusieurs outils de débogage Python peuvent être facilement utilisés
+avec.
 
 
 <br/>
@@ -149,5 +189,3 @@ Pour plus d'informations sur Kubernetes, suis cette
 | [**Installation et configuration :arrow_forward:**](../install/README.md)
 
 </div>
-
-
