@@ -1055,7 +1055,8 @@ last = nn.Linear(4, 2)
 <div align="center">
 
 ###### FIGURE 05
-![](./images/Le-perceptron-multicouches.png)
+
+![](./images/Le_perceptron_multicouches.png)
 
 </div>
 <p align="center">
