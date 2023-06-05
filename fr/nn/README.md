@@ -1,5 +1,5 @@
 ## Réseaux de neuronnes
-![](https://img.shields.io/badge/lastest-2023--05--10-success)
+![](https://img.shields.io/badge/lastest-2023--06--05-success)
 ![](https://img.shields.io/badge/status-en%20r%C3%A9daction%20-yellow)
 
 Ce chapitre prépare le terrain pour les chapitres suivants en présentant
@@ -38,6 +38,7 @@ concepts. Il s'agit d'un modèle commun qui sera utilisé tout au long du cour.
                 <li><a href="#programme-dapprentissage">Programme d'apprentissage</a></li>
             </ul>
         </li>
+        <li><a href="#perceptron-multicouche">Perceptron multicouche</a></li>
         <!--<li><a href=""></a></li>-->
     </ul>
 </details>
@@ -1021,11 +1022,60 @@ données en trois partitions générées de manière aléatoire qui sont :
 Ou bien, procéder à une **validation croisée kfold**.
 
 
+### Perceptron multicouche
+Le perceptron multicouche est l'un des éléments de base des réseaux neuronaux.
+Dans le perceptron simple, il s'agit d'un seul neurone qui prend un vecteur
+de nombres en entrée et calcule une seule valeur (un scalaire) en sortie.
+Dans un perceptron multicouche (MLP), on dispose de plusieurs couches placées
+l'une après l'autre, et chacune de ces couches regroupe plusieurs perceptrons
+de sorte qu'on ait un vecteur de nombres en sortie. De plus, dans un MLP,
+le vecteur de nombres produits en sortie d'une couche est envoyé en entré à la
+couche suivante, jusqu'à atteindre la dernière couche.
+
+Dans PyTorch, cela se fait tout simplement en alignant des `nn.Linear(n, p)`
+et en changeant les valeurs `n` et `p`. Par exemple :
+
+###### `</> PYTHON [13]`
+```python
+import torch.nn as nn
+
+# ...
+
+# Premières couche à 3 entrées et 3 sorties:
+first = nn.Linear(3, 3)
+
+# Deuxièmes couche à 3 entrées et 4 sorties:
+second = nn.Linear(3, 4)
+
+# Dernière couche à 4 entrés et 2 sorties:
+last = nn.Linear(4, 2)
+
+```
+
+<div align="center">
+
+###### FIGURE 05
+![](./images/Le-perceptron-multicouches.png)
+
+</div>
+<p align="center">
+<i>
+<ins>Figure 05</ins> : Résultat schématique du perceptron du code ci-dessus.
+
+</i>
+</p>
+
+Comme tu peux déjà le remarquer, le nombre de sorties d'une couche est égale
+au nombre de neurones présents sur cette couche. Et ensuite, le nombre
+d'entrées d'un couche $c_i$ est égale au nombre de neurones présents sur la
+couche immédiatement précédente $c_{i-1}$.
+
+
 <br/>
 <br/>
 <div align="center">
 
 [:arrow_backward: Introduction au Tenseur](../tensor/README.md)
-<!-- | [**Distribution de probabilité :arrow_forward:**](./proba/README.md) -->
+<!-- | [**Exemples de projet :arrow_forward:**](../examples/README.md) -->
 
 </div>

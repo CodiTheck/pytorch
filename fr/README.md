@@ -4,8 +4,8 @@
 
 <div align="center">
 
-![](https://img.shields.io/badge/pytorch-1.13.1-orange)
-![](https://img.shields.io/badge/lastest-2023--05--15-success)
+![](https://img.shields.io/badge/pytorch-2.0.0-orange)
+![](https://img.shields.io/badge/lastest-2023--06--05-success)
 ![](https://img.shields.io/badge/contact-dr.mokira%40gmail.com-blueviolet)
 
 </div>
@@ -53,21 +53,12 @@ et dans de nombreuses entreprises comme *Tesla*, *Uber* etc.
                 <li><a href="./nn/README.md#fonction-dactivation">Fonction d'activation</a></li>
                 <li><a href="./nn/README.md#fonction-de-perte">Fonction de perte</a></li>
                 <li><a href="./nn/README.md#apprentissage-supervis%C3%A9e">Apprentissage supervisée</a></li>
+                <li><a href="./nn/README.md#perceptron-multicouche">Perceptron multicouche</a></li>
             </ul>
         </li>
-        <!--<li><a href="./intro/README.md">Introduction</a>
+        <!--<li><a href="./examples/README.md">Exemples de projet</a>
             <ul>
                 <li><a href="./intro/README.md#pourquoi-pytorch">Pourquoi PyTorch ?</a></li>
-            </ul>
-        </li>
-        <li><a href="./tensor/README.md">Introduction au Tenseur</a>
-            <ul>
-                <li><a href="./tensor/README.md#création-de-tenseur">Création de Tenseur</a>
-                    <ul>
-                        <li><a href="./tensor/README.md#scalaire">Scalaire</a></li>
-                        <li><a href="./tensor/README.md#vecteur">Vecteur</a></li>
-                    </ul>
-                </li>
             </ul>
         </li>-->
     </ul>
